@@ -44,7 +44,7 @@ export type RequestOptions<Method, Type extends ResponseType> = {
     send?:
         | string
         | Blob
-        | Record<string, string>
+        | Record<string, any>
         | BufferSource
         | FormData
         | URLSearchParams
