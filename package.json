@@ -2,13 +2,18 @@
   "name": "minireq",
   "version": "1.0.0",
   "description": "A minimal request library for the browser",
-  "main": "index.js",
+  "main": "build/bundle.cjs.js",
+  "module": "build/bundle.esm.js",
+  "typings": "build/index.d.ts",
   "scripts": {
-    "build": "tsc --build tsconfig.build.json"
+    "build": "tsc --project tsconfig.build.json && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "rollup build/index.js --format esm --file build/bundle.esm.js",
+    "build:cjs": "rollup build/index.js --format cjs --file build/bundle.cjs.js"
   },
   "author": "Jan van Brügge",
   "license": "MIT",
   "devDependencies": {
+    "rollup": "^1.31.0",
     "typescript": "^3.7.5"
   },
   "prettier": {
