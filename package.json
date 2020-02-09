@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "A minimal request library for the browser",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json"
+  },
   "author": "Jan van Brügge",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^3.7.5"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
