@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/assert": "^1.4.6",
     "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.0",
     "assert": "^2.0.0",
     "json-server": "^0.15.1",
     "karma": "^4.4.1",
