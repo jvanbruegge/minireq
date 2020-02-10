@@ -4,7 +4,12 @@ module.exports = config => {
 
         files: [{ pattern: 'src/**/*.ts' }, { pattern: 'test/**/*.ts' }],
 
-        plugins: ['karma-mocha', 'karma-firefox-launcher', 'karma-typescript'],
+        plugins: [
+            'karma-mocha',
+            'karma-firefox-launcher',
+            'karma-chrome-launcher',
+            'karma-typescript'
+        ],
 
         preprocessors: {
             '**/*.ts': ['karma-typescript']
@@ -12,7 +17,7 @@ module.exports = config => {
 
         reporters: ['dots', 'karma-typescript'],
 
-        browsers: ['FirefoxHeadless'],
+        browsers: ['FirefoxHeadless', 'ChromeHeadless'],
 
         coverageReporter: {
             dir: 'coverage/',
