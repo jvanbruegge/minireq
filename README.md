@@ -1,5 +1,7 @@
 # minireq
 
+[![jvanbruegge](https://circleci.com/gh/jvanbruegge/minireq.svg?style=svg)](https://app.circleci.com/github/jvanbruegge/minireq/pipelines)
+
 A minimal request library built on XMLHTTPRequest for the browser.
 
 ## Why not fetch, axios or superagent
