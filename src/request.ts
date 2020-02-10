@@ -21,11 +21,10 @@ export function makeRequest(
         let abort: any;
 
         const opts = { ...defaultOptions, ...options };
+        const url = opts.url + (opts.query ? makeQueryString(opts.query) : '');
 
         const promise = new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
-            const url =
-                opts.url + (opts.query ? makeQueryString(opts.query) : '');
 
             abort = () => {
                 request.abort();
@@ -118,7 +117,10 @@ export function makeRequest(
 }
 
 function makeQueryString(query: Record<string, any> | string): string {
-    if (typeof query === 'string') return query;
+    if (typeof query === 'string') {
+        if (query.charAt(0) === '?') return query;
+        else return '?' + query;
+    }
 
     let str = '?';
 
@@ -126,8 +128,8 @@ function makeQueryString(query: Record<string, any> | string): string {
         str += key + '=' + query[key] + '&';
     }
 
-    if (str.slice(-1) === '&') {
-        str = str.slice(0, -1);
+    if (str === '?') {
+        throw new Error('An empty object is not valid as query parameter');
     }
 
     return str;

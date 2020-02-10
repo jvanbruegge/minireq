@@ -1,24 +1,20 @@
 import * as assert from 'assert';
-
-const db = require('./support/data.json');
+import { db, url } from './helpers';
 
 import { makeRequest } from '../src/index';
-
-const url = (path: string) => 'http://localhost:3000' + path;
 
 describe('simple tests', () => {
     const request = makeRequest();
 
-    it('should be able to make a simple REST request', done => {
+    it('should be able to make a simple REST request', () => {
         const { promise } = request({
             method: 'GET',
             url: url('/users')
         });
 
-        promise.then(({ status, data }) => {
+        return promise.then(({ status, data }) => {
             assert.strictEqual(status, 200);
             assert.deepStrictEqual(data, db.users);
-            done();
         });
     });
 });

@@ -40,7 +40,7 @@ export type RequestOptions<Method, Type extends ResponseType> = {
     headers?: {
         [name: string]: string;
     };
-    query?: string | Record<string, string>;
+    query?: string | Record<string, string | number | boolean>;
     send?:
         | string
         | Blob
