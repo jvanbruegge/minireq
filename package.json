@@ -8,12 +8,20 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json && pnpm run build:esm && pnpm run build:cjs",
     "build:esm": "rollup build/index.js --format esm --file build/bundle.esm.js",
-    "build:cjs": "rollup build/index.js --format cjs --file build/bundle.cjs.js"
+    "build:cjs": "rollup build/index.js --format cjs --file build/bundle.cjs.js",
+    "test": "nyc --reporter text --reporter html pnpm run test:no_cover",
+    "test:no_cover": "mocha --require ts-node/register './test/**/*'"
   },
   "author": "Jan van Brügge",
   "license": "MIT",
   "devDependencies": {
+    "@types/assert": "^1.4.6",
+    "@types/mocha": "^7.0.1",
+    "assert": "^2.0.0",
+    "mocha": "^7.0.1",
+    "nyc": "^15.0.0",
     "rollup": "^1.31.0",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "prettier": {
