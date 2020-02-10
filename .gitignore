@@ -3,4 +3,6 @@ build/
 .nyc_output/
 coverage/
 
+test/support/db.json
+
 *.log

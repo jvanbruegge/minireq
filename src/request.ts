@@ -18,7 +18,7 @@ export function makeRequest(
     return function request<T = any, Type extends ResponseType = 'text'>(
         options: RequestOptions<METHOD, Type>
     ): Result<ResultMapping<T>[Type]> {
-        let abort = () => {};
+        let abort: any;
 
         const opts = { ...defaultOptions, ...options };
 
@@ -67,6 +67,10 @@ export function makeRequest(
                     request.setRequestHeader(key, opts.headers[key]);
                 }
             }
+            request.setRequestHeader(
+                'Content-Type',
+                opts.contentType ?? 'application/json'
+            );
 
             if (opts.progress) {
                 request.addEventListener('progress', opts.progress);
