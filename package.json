@@ -10,7 +10,10 @@
     "build:esm": "rollup build/index.js --format esm --file build/bundle.esm.js",
     "build:cjs": "rollup build/index.js --format cjs --file build/bundle.cjs.js",
     "test": "start-server-and-test start-server :3000 'karma start'",
-    "start-server": "cp test/support/data.json test/support/db.json && json-server -q -m test/support/middleware.js --watch test/support/db.json"
+    "debug": "start-server-and-test debug-server :3000 'DEBUG=1 karma start'",
+    "start-server": "pnpm run copy-db && json-server -q -m test/support/middleware.js --watch test/support/db.json",
+    "debug-server": "pnpm run copy-db && json-server -m test/support/middleware.js --watch test/support/db.json",
+    "copy-db": "cp test/support/data.json test/support/db.json"
   },
   "author": "Jan van Brügge",
   "license": "MIT",

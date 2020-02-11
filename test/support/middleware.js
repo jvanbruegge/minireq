@@ -13,5 +13,16 @@ module.exports = (req, res, next) => {
         const html =
             '<!DOCTYPE html><html><head></head><body><div></div></body></html>';
         res.send(html);
+    } else if (req.method === 'GET' && req.path === '/streaming') {
+        let i = 1;
+
+        const id = setInterval(() => {
+            if (i > 10) {
+                res.end();
+                clearInterval(id);
+            } else {
+                res.write(`Chunk ${i++}\n`);
+            }
+        }, 10);
     } else next();
 };

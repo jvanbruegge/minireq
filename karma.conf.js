@@ -1,3 +1,5 @@
+const debug = process.env.DEBUG === '1';
+
 module.exports = config => {
     config.set({
         frameworks: ['mocha', 'karma-typescript'],
@@ -17,7 +19,7 @@ module.exports = config => {
 
         reporters: ['dots', 'karma-typescript'],
 
-        browsers: ['FirefoxHeadless', 'ChromeHeadless'],
+        browsers: debug ? ['Firefox'] : ['FirefoxHeadless', 'ChromeHeadless'],
 
         coverageReporter: {
             dir: 'coverage/',
@@ -35,6 +37,7 @@ module.exports = config => {
             }
         },
 
-        singleRun: true
+        singleRun: !debug,
+        concurrency: 1 // This is needed due to the afterEach hooks
     });
 };
