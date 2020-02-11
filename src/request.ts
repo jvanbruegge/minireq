@@ -32,10 +32,7 @@ export function makeRequest(
 
             request.addEventListener('load', () => {
                 let response: any = request.response;
-                if (
-                    request.responseType === 'text' ||
-                    request.responseType === 'document'
-                ) {
+                if (request.responseType === 'text') {
                     const mimeType = request
                         .getResponseHeader('Content-Type')
                         ?.split(';')[0];

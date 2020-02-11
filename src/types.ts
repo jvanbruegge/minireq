@@ -29,7 +29,7 @@ export type ResponseType =
 export type ResultMapping<T> = {
     arraybuffer: ArrayBuffer;
     blob: Blob;
-    document: T;
+    document: Document;
     json: T;
     text: T;
 };
