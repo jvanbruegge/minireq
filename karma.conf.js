@@ -21,16 +21,11 @@ module.exports = config => {
 
         browsers: debug ? ['Firefox'] : ['FirefoxHeadless', 'ChromeHeadless'],
 
-        coverageReporter: {
-            dir: 'coverage/',
-            reporters: [{ type: 'html' }, { type: 'json' }]
-        },
-
         karmaTypescriptConfig: {
             reports: {
                 text: null,
                 html: 'coverage',
-                json: 'coverage'
+                json: { directory: 'coverage', filename: 'coverage.json' }
             },
             coverageOptions: {
                 exclude: /^test\//
