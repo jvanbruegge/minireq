@@ -11,6 +11,12 @@ export const defaultSerializers = {
     'application/json': { parse: JSON.parse, convert: JSON.stringify }
 };
 
+const defaults = {
+    contentType: 'application/json',
+    redirects: true,
+    responseType: 'text' as 'text'
+};
+
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
     defaultOptions: Partial<RequestOptions<METHOD, ResponseType>> = {}
@@ -20,7 +26,7 @@ export function makeRequest(
     ): Result<ResultMapping<T>[Type]> {
         let abort: any;
 
-        const opts = { ...defaultOptions, ...options };
+        const opts = { ...defaults, ...defaultOptions, ...options };
         const url = opts.url + (opts.query ? makeQueryString(opts.query) : '');
 
         const promise = new Promise((resolve, reject) => {
@@ -56,17 +62,14 @@ export function makeRequest(
                 opts.auth?.password
             );
 
-            request.responseType = opts.responseType ?? 'text';
+            request.responseType = opts.responseType;
 
             if (opts.headers) {
                 for (const key in opts.headers) {
                     request.setRequestHeader(key, opts.headers[key]);
                 }
             }
-            request.setRequestHeader(
-                'Content-Type',
-                opts.contentType ?? 'application/json'
-            );
+            request.setRequestHeader('Content-Type', opts.contentType);
 
             if (opts.progress) {
                 request.addEventListener('progress', opts.progress);
@@ -92,12 +95,10 @@ export function makeRequest(
                 ) {
                     request.send(opts.send);
                 } else {
-                    if (opts.contentType && serializers[opts.contentType]) {
+                    if (serializers[opts.contentType]) {
                         request.send(
                             serializers[opts.contentType].convert(opts.send)
                         );
-                    } else if (!opts.contentType) {
-                        request.send(JSON.stringify(opts.send));
                     } else {
                         throw new Error(
                             `Could not find a serializer for content type ${opts.contentType}`
