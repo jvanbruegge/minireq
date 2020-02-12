@@ -1,6 +1,6 @@
 # minireq
 
-[![jvanbruegge](https://circleci.com/gh/jvanbruegge/minireq.svg?style=shield)](https://app.circleci.com/github/jvanbruegge/minireq/pipelines) [![codecov](https://codecov.io/gh/jvanbruegge/minireq/branch/master/graph/badge.svg)](https://codecov.io/gh/jvanbruegge/minireq) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![jvanbruegge](https://circleci.com/gh/jvanbruegge/minireq.svg?style=shield)](https://app.circleci.com/github/jvanbruegge/minireq/pipelines) [![codecov](https://codecov.io/gh/jvanbruegge/minireq/branch/master/graph/badge.svg)](https://codecov.io/gh/jvanbruegge/minireq) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A minimal request library built on XMLHTTPRequest for the browser.
 
