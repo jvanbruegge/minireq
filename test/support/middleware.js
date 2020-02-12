@@ -24,5 +24,17 @@ module.exports = (req, res, next) => {
                 res.write(`Chunk ${i++}\n`);
             }
         }, 10);
+    } else if (req.method === 'GET' && req.path === '/headers') {
+        if (req.header('X-Auth-Token') === 'superSecretToken') {
+            res.set('Content-Type', 'text/plain');
+            res.status(200).send(req.header('X-Echo'));
+        } else {
+            res.sendStatus(401);
+        }
+    } else if (req.method === 'GET' && req.path === '/secret') {
+        console.log(JSON.stringify(req.headers, null, 2));
+        if (req.header('Authorization') === 'Basic YWRtaW46YWRtaW4=') {
+            res.sendStatus(200);
+        } else res.sendStatus(401);
     } else next();
 };

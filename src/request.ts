@@ -57,13 +57,7 @@ export function makeRequest(
         });
         request.addEventListener('error', reject);
 
-        request.open(
-            opts.method,
-            url,
-            true,
-            opts.auth?.user,
-            opts.auth?.password
-        );
+        request.open(opts.method, url, true);
 
         request.responseType = opts.responseType;
 
@@ -73,6 +67,13 @@ export function makeRequest(
             }
         }
         request.setRequestHeader('Content-Type', opts.contentType);
+
+        if (opts.auth) {
+            request.setRequestHeader(
+                'Authorization',
+                `Basic ${btoa(opts.auth.user + ':' + opts.auth.password)}`
+            );
+        }
 
         if (opts.progress) {
             request.addEventListener('progress', opts.progress);

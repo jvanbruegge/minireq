@@ -53,7 +53,7 @@ export type RequestOptions<Method, Type extends ResponseType> = {
     contentType?: string;
     auth?: {
         user: string;
-        password?: string;
+        password: string;
     };
     attach?: {
         [field: string]: Blob | File;
