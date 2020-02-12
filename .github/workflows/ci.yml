@@ -1,0 +1,43 @@
+name: Continous Integration
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+
+jobs:
+  build:
+    name: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]  #[ubuntu-18.04, windows-2019, macos-latest]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install pnpm
+        run: curl -L https://unpkg.com/@pnpm/self-installer | sudo node
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        id: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm run build
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Upload coverage
+        env:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
