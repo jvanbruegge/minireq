@@ -38,6 +38,11 @@ export function makeRequest(
             request.abort();
         };
 
+        if (opts.timeout) request.timeout = opts.timeout;
+        if (opts.onTimeout) {
+            request.addEventListener('timeout', opts.onTimeout);
+        }
+
         request.addEventListener('load', () => {
             let response: any = request.response;
             if (request.responseType === 'text') {

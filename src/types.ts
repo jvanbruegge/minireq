@@ -64,6 +64,8 @@ export type RequestOptions<Method, Type extends ResponseType> = {
         cert: string;
     };
     responseType?: Type;
+    timeout?: number;
+    onTimeout?: (x: ProgressEvent) => void;
 };
 
 export type Response<T> = {

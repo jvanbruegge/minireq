@@ -71,4 +71,15 @@ describe('abort tests', () => {
 
         setTimeout(done, 110);
     });
+
+    it('should allow to specify a timeout on the request', done => {
+        const { promise } = request({
+            method: 'GET',
+            url: url('/streaming'),
+            timeout: 60,
+            onTimeout: () => done()
+        });
+
+        promise.then(() => assert.fail('should not deliver data'));
+    });
 });
