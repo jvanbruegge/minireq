@@ -1,12 +1,10 @@
 import * as assert from 'assert';
-import { url, resetDB } from './helpers';
+import { url } from './helpers';
 
 import { makeRequest } from '../src/index';
 
 describe('send tests', () => {
     const request = makeRequest();
-
-    afterEach(resetDB);
 
     it('should send strings without serializing first', () => {
         const str = JSON.stringify({

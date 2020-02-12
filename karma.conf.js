@@ -4,7 +4,7 @@ module.exports = config => {
     config.set({
         frameworks: ['mocha', 'karma-typescript'],
 
-        files: [{ pattern: 'src/**/*.ts' }, { pattern: 'test/**/*.ts' }],
+        files: [{ pattern: 'src/**/*.ts' }, { pattern: 'test/*.ts' }],
 
         plugins: [
             'karma-mocha',
@@ -32,7 +32,6 @@ module.exports = config => {
             }
         },
 
-        singleRun: !debug,
-        concurrency: 1 // This is needed due to the afterEach hooks
+        singleRun: !debug
     });
 };

@@ -1,12 +1,10 @@
 import * as assert from 'assert';
-import { db, url, resetDB } from './helpers';
+import { db, url } from './helpers';
 
 import { makeRequest } from '../src/index';
 
 describe('simple tests', () => {
     const request = makeRequest();
-
-    afterEach(resetDB);
 
     it('should be able to make a simple GET request', () => {
         const { promise } = request({
