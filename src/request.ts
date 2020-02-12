@@ -13,7 +13,6 @@ export const defaultSerializers = {
 
 const defaults = {
     contentType: 'application/json',
-    redirects: true,
     responseType: 'text' as 'text'
 };
 

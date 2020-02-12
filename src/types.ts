@@ -63,7 +63,6 @@ export type RequestOptions<Method, Type extends ResponseType> = {
         key: string;
         cert: string;
     };
-    redirects?: boolean | number;
     responseType?: Type;
 };
 
