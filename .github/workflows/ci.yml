@@ -11,13 +11,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04]  #[ubuntu-18.04, windows-2019, macos-latest]
+        os: [ubuntu-18.04, windows-2019]  #[ubuntu-18.04, windows-2019, macos-latest]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Install pnpm
-        run: curl -L https://unpkg.com/@pnpm/self-installer | sudo node
+      - name: Install pnpm (Linux)
+        run: sudo npm install --global pnpm
+        if: matrix.os == 'ubuntu-18.04'
+
+      - name: Install pnpm (Windows)
+        run: npm install --global pnpm
+        if: matrix.os == 'windows-2019'
 
       - name: Cache dependencies
         uses: actions/cache@v1
