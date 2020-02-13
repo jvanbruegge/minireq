@@ -2,6 +2,7 @@ node_modules/
 build/
 .nyc_output/
 coverage/
+docs/
 
 test/support/db.json
 
