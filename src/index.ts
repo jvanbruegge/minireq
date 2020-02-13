@@ -1,3 +1,3 @@
-export { makeRequest } from './request';
+export { makeRequest, defaultSerializers } from './request';
 
 export * from './types';

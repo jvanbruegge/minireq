@@ -79,6 +79,6 @@ export type Result<T> = {
 };
 
 export type Serializer = {
-    parse: (data: string) => any;
-    convert: (obj: any) => string;
+    parse?: (data: string) => any;
+    convert?: (obj: any) => string;
 };

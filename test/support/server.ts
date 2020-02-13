@@ -26,7 +26,17 @@ app.get('/users', (req: any, res: any) => {
         users = users.filter((x: any) => x.name == req.query.name);
     }
 
-    res.json(users);
+    if (
+        req.header('Accept') === 'application/json' ||
+        req.header('Accept') === '*/*'
+    ) {
+        res.json(users);
+    } else if (req.header('Accept') === 'application/ndjson') {
+        res.set('Content-Type', 'application/ndjson');
+        res.status(200).send(
+            users.map((x: any) => JSON.stringify(x)).join('\n')
+        );
+    } else res.sendStatus(415);
 });
 
 app.get('/document/html', (_: any, res: any) => {

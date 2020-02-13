@@ -13,7 +13,8 @@ export const defaultSerializers = {
 
 const defaults = {
     contentType: 'application/json',
-    responseType: 'text' as 'text'
+    responseType: 'text' as 'text',
+    accept: '*/*'
 };
 
 export function makeRequest(
@@ -49,8 +50,8 @@ export function makeRequest(
                 const mimeType = request
                     .getResponseHeader('Content-Type')
                     ?.split(';')[0];
-                if (mimeType && serializers[mimeType]) {
-                    response = serializers[mimeType].parse(response);
+                if (mimeType && serializers[mimeType]?.parse) {
+                    response = serializers[mimeType].parse!(response);
                 }
             }
 
@@ -71,6 +72,7 @@ export function makeRequest(
             }
         }
         request.setRequestHeader('Content-Type', opts.contentType);
+        request.setRequestHeader('Accept', opts.accept);
 
         if (opts.auth) {
             request.setRequestHeader(
@@ -102,8 +104,8 @@ export function makeRequest(
                 opts.send instanceof URLSearchParams
             ) {
                 request.send(opts.send);
-            } else if (serializers[opts.contentType]) {
-                request.send(serializers[opts.contentType].convert(opts.send));
+            } else if (serializers[opts.contentType]?.convert) {
+                request.send(serializers[opts.contentType].convert!(opts.send));
             } else {
                 throw new Error(
                     `Could not find a serializer for content type ${opts.contentType}`
