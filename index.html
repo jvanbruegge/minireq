@@ -97,7 +97,7 @@ promise.then(<span class="hljs-function">(<span class="hljs-params">{ status, da
 
 <span class="hljs-keyword">const</span> { promise } = request({
     method: <span class="hljs-string">'POST'</span>,
-    url: <span class="hljs-string">'/api/users'</span>m
+    url: <span class="hljs-string">'/api/users'</span>,
     send: {
         name: <span class="hljs-string">'Peter'</span>,
         age: <span class="hljs-number">50</span>,
@@ -106,7 +106,7 @@ promise.then(<span class="hljs-function">(<span class="hljs-params">{ status, da
 });
 
 promise.then(<span class="hljs-function">(<span class="hljs-params">{ status, data }</span>) =&gt;</span> {
-    <span class="hljs-keyword">if</span>(status === <span class="hljs-number">201</span>) {
+    <span class="hljs-keyword">if</span> (status === <span class="hljs-number">201</span>) {
         <span class="hljs-built_in">console</span>.log(data.id);
     }
 });</code></pre>
