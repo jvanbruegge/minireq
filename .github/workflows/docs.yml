@@ -22,9 +22,9 @@ jobs:
         id: cache-pnpm-store
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('package.json') }}
+          key: docs-pnpm-store-${{ hashFiles('package.json') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            docs-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install

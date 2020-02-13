@@ -1,8 +1,10 @@
 # minireq
 
-![build](https://github.com/jvanbruegge/minireq/workflows/Continous%20Integration/badge.svg) [![codecov](https://codecov.io/gh/jvanbruegge/minireq/branch/master/graph/badge.svg)](https://codecov.io/gh/jvanbruegge/minireq) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+![build](https://github.com/jvanbruegge/minireq/workflows/Continous%20Integration/badge.svg) ![docs](https://github.com/jvanbruegge/minireq/workflows/Documentation/badge.svg) [![codecov](https://codecov.io/gh/jvanbruegge/minireq/branch/master/graph/badge.svg)](https://codecov.io/gh/jvanbruegge/minireq) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A minimal request library built on XMLHTTPRequest for the browser.
+
+Documentation on [Github Pages](https://jvanbruegge.github.io/minireq/)
 
 ## Why not fetch, axios or superagent
 
