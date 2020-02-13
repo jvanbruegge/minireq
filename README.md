@@ -29,6 +29,40 @@ promise.then(({ status, data }) => {
 });
 ```
 
+Using a custom content type
+
+```ts
+import { makeRequest, defaultSerializers } from 'minireq';
+
+const serializer = {
+    parse: (data: string) => data.split('\n').map(x => JSON.parse(x)),
+    convert: (data: any) => {
+        if (!Array.isArray(data)) {
+            return [JSON.stringify(data)];
+        } else {
+            return data.map(x => JSON.stringify(x)).join('\n');
+        }
+    }
+};
+
+const { request } = makeRequest({
+    ...defaultSerializers,
+    'application/ndjson': serializer
+});
+
+const { promise, abort } = request({
+    method: 'GET',
+    url: '/api/users',
+    accept: 'application/ndjson'
+});
+
+const { status, data } = await promise;
+
+if (status === 200) {
+    console.log(data.length);
+}
+```
+
 ## API
 
 ### `makeRequest(serializers, defaultOptions): request`
