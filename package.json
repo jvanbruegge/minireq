@@ -12,7 +12,8 @@
     "test": "start-server-and-test start-server 3000 test:normal",
     "debug": "DEBUG=1 pnpm test",
     "test:normal": "karma start",
-    "start-server": "ts-node test/support/server.ts"
+    "start-server": "ts-node test/support/server.ts",
+    "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll"
   },
   "author": "Jan van Brügge",
   "license": "MIT",
@@ -36,6 +37,7 @@
     "rollup": "^1.31.0",
     "start-server-and-test": "^1.10.8",
     "ts-node": "^8.6.2",
+    "typedoc": "^0.16.9",
     "typescript": "^3.7.5"
   },
   "prettier": {

@@ -40,7 +40,13 @@ export type RequestOptions<Method, Type extends ResponseType> = {
     headers?: {
         [name: string]: string;
     };
+    /**
+     * Either a premade query string or an object of key: value pairs
+     */
     query?: string | Record<string, string | number | boolean>;
+    /**
+     * If this is an object, the contentType will be used to serialize it
+     */
     send?:
         | string
         | Blob
@@ -50,7 +56,13 @@ export type RequestOptions<Method, Type extends ResponseType> = {
         | URLSearchParams
         | ReadableStream;
     accept?: string;
+    /**
+     * @default 'application/json'
+     */
     contentType?: string;
+    /**
+     * Credentials for HTTP basic auth
+     */
     auth?: {
         user: string;
         password: string;
@@ -63,7 +75,14 @@ export type RequestOptions<Method, Type extends ResponseType> = {
         key: string;
         cert: string;
     };
+    /**
+     * Usually 'text' or 'arraybuffer' for binary data
+     * @default 'text'
+     */
     responseType?: Type;
+    /**
+     * Timeout in milliseconds
+     */
     timeout?: number;
     onTimeout?: (x: ProgressEvent) => void;
 };

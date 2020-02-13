@@ -20,7 +20,9 @@ const defaults = {
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
     defaultOptions: Partial<RequestOptions<METHOD, ResponseType>> = {}
-) {
+): <T = any, Type extends ResponseType = 'text'>(
+    options: RequestOptions<METHOD, Type>
+) => Result<ResultMapping<T>[Type]> {
     return function request<T = any, Type extends ResponseType = 'text'>(
         options: RequestOptions<METHOD, Type>
     ): Result<ResultMapping<T>[Type]> {
