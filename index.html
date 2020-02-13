@@ -1,0 +1,324 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>minireq</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">minireq</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>minireq</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#minireq" id="minireq" style="color: inherit; text-decoration: none;">
+					<h1>minireq</h1>
+				</a>
+				<p><img src="https://github.com/jvanbruegge/minireq/workflows/Continous%20Integration/badge.svg" alt="build"> <a href="https://codecov.io/gh/jvanbruegge/minireq"><img src="https://codecov.io/gh/jvanbruegge/minireq/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" alt="code style: prettier"></a></p>
+				<p>A minimal request library built on XMLHTTPRequest for the browser.</p>
+				<a href="#why-not-fetch-axios-or-superagent" id="why-not-fetch-axios-or-superagent" style="color: inherit; text-decoration: none;">
+					<h2>Why not fetch, axios or superagent</h2>
+				</a>
+				<p><code>fetch</code> is too bare bones and also does not support features like progress indication. <code>axios</code> and <code>superagent</code> are neither minimal nor are they written with ES modules with makes them awkward to bundle.</p>
+				<p>Also I want a request library with better types than currently available.</p>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { makeRequest } <span class="hljs-keyword">from</span> <span class="hljs-string">'minireq'</span>;
+
+<span class="hljs-keyword">const</span> request = makeRequest();
+
+<span class="hljs-keyword">const</span> { promise, abort } = request({
+    method: <span class="hljs-string">'GET'</span>,
+    url: <span class="hljs-string">'/api/users'</span>
+});
+
+promise.then(<span class="hljs-function">(<span class="hljs-params">{ status, data }</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (status === <span class="hljs-number">200</span>) {
+        <span class="hljs-built_in">console</span>.log(data.name);
+    }
+});</code></pre>
+				<p>Using a custom content type</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { makeRequest, defaultSerializers } <span class="hljs-keyword">from</span> <span class="hljs-string">'minireq'</span>;
+
+<span class="hljs-keyword">const</span> serializer = {
+    parse: <span class="hljs-function">(<span class="hljs-params">data: <span class="hljs-built_in">string</span></span>) =&gt;</span> data.split(<span class="hljs-string">'\n'</span>).map(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-built_in">JSON</span>.parse(x)),
+    convert: <span class="hljs-function">(<span class="hljs-params">data: <span class="hljs-built_in">any</span></span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Array</span>.isArray(data)) {
+            <span class="hljs-keyword">return</span> [<span class="hljs-built_in">JSON</span>.stringify(data)];
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> data.map(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-built_in">JSON</span>.stringify(x)).join(<span class="hljs-string">'\n'</span>);
+        }
+    }
+};
+
+<span class="hljs-keyword">const</span> { request } = makeRequest({
+    ...defaultSerializers,
+    <span class="hljs-string">'application/ndjson'</span>: serializer
+});
+
+<span class="hljs-keyword">const</span> { promise, abort } = request({
+    method: <span class="hljs-string">'GET'</span>,
+    url: <span class="hljs-string">'/api/users'</span>,
+    accept: <span class="hljs-string">'application/ndjson'</span>
+});
+
+<span class="hljs-keyword">const</span> { status, data } = <span class="hljs-keyword">await</span> promise;
+
+<span class="hljs-keyword">if</span> (status === <span class="hljs-number">200</span>) {
+    <span class="hljs-built_in">console</span>.log(data.length);
+}</code></pre>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<a href="#codemakerequestserializers-defaultoptions-requestcode" id="codemakerequestserializers-defaultoptions-requestcode" style="color: inherit; text-decoration: none;">
+					<h3><code>makeRequest(serializers, defaultOptions): request</code></h3>
+				</a>
+				<p><code>serializers</code> is a record of mime type to a combo of parsing and conversion function. If this argument is missing a default serializer is used:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> defaultSerializers = {
+    <span class="hljs-string">'application/json'</span>: { parse: <span class="hljs-built_in">JSON</span>.parse, convert: <span class="hljs-built_in">JSON</span>.stringify }
+};</code></pre>
+				<p><code>defaultOptions</code> is a normal <code>RequestOptions</code> object that can be used to set custom default values for any field.</p>
+				<a href="#coderequestrequestoptions-resultcode" id="coderequestrequestoptions-resultcode" style="color: inherit; text-decoration: none;">
+					<h3><code>request(requestOptions): Result</code></h3>
+				</a>
+				<p>All possible options are:</p>
+				<pre><code>{
+    <span class="hljs-keyword">method</span>: <span class="hljs-symbol">'GET'</span> | <span class="hljs-symbol">'POST'</span> | <span class="hljs-symbol">'PUT'</span> | <span class="hljs-symbol">'PATCH'</span> | <span class="hljs-symbol">'DELETE'</span> | <span class="hljs-symbol">'HEAD'</span> | <span class="hljs-symbol">'CONNECT'</span> | <span class="hljs-symbol">'TRACE'</span>;
+    url: <span class="hljs-built_in">string</span>;
+    headers?: {
+        [name: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span>;
+    };
+    query?: <span class="hljs-built_in">string</span> | <span class="hljs-type">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt;;
+    send?:                        # <span class="hljs-type">If</span> this is an <span class="hljs-keyword">object</span> it will be serialized
+        | <span class="hljs-built_in">string</span>                  # depending on the contentType field.
+        | <span class="hljs-type">Blob</span>                    # <span class="hljs-keyword">for</span> an undefined content <span class="hljs-keyword">type</span> it will default <span class="hljs-keyword">to</span> json
+        | <span class="hljs-type">Record</span>&lt;<span class="hljs-built_in">string</span>, any&gt;     # <span class="hljs-keyword">else</span> it will <span class="hljs-keyword">try</span> <span class="hljs-keyword">to</span> use the correct serializer <span class="hljs-keyword">or</span> error
+        | <span class="hljs-type">BufferSource</span>
+        | <span class="hljs-type">FormData</span>
+        | <span class="hljs-type">URLSearchParams</span>
+        | <span class="hljs-type">ReadableStream</span>;
+    accept?: <span class="hljs-built_in">string</span>;              # <span class="hljs-type">Defaults</span> <span class="hljs-keyword">to</span> */*
+    contentType?: <span class="hljs-built_in">string</span>;
+    auth?: {
+        user: <span class="hljs-built_in">string</span>;
+        password?: <span class="hljs-built_in">string</span>;
+    };
+    attach?: {
+        [field: <span class="hljs-built_in">string</span>]: <span class="hljs-type">Blob</span> | <span class="hljs-type">File</span>;
+    };
+    progress?: (x: <span class="hljs-type">ProgressEvent</span>) =&gt; void; # <span class="hljs-type">Callback</span> <span class="hljs-keyword">to</span> receive progress events
+    agent?: {
+        key: <span class="hljs-built_in">string</span>;
+        cert: <span class="hljs-built_in">string</span>;
+    };
+    redirects?: boolean | number;
+    responseType?: <span class="hljs-symbol">'text'</span> | <span class="hljs-symbol">'arraybuffer'</span> | <span class="hljs-symbol">'blob'</span> | <span class="hljs-symbol">'document'</span> | <span class="hljs-symbol">'json'</span>; # <span class="hljs-type">Defaults</span> <span class="hljs-keyword">to</span> text
+};</code></pre>
+				<a href="#result" id="result" style="color: inherit; text-decoration: none;">
+					<h3>Result</h3>
+				</a>
+				<pre><code class="language-ts">{
+    abort: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>; <span class="hljs-comment">// Call this function to abort the request</span>
+    promise: <span class="hljs-built_in">Promise</span>&lt;Response&gt;;
+}</code></pre>
+				<a href="#response" id="response" style="color: inherit; text-decoration: none;">
+					<h3>Response</h3>
+				</a>
+				<p>The response is parsed using the serializers and the <code>Content-Type</code> header. If no serializer is found, the raw string is returned. For <code>responseType</code> other than <code>text</code> and <code>document</code> the corresponding type is returned (<code>ArrayBuffer</code> for <code>arraybuffer</code>, <code>Blob</code> for <code>blob</code> and parsed JSON for <code>json</code>);</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#connect" class="tsd-kind-icon">CONNECT</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#delete" class="tsd-kind-icon">DELETE</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#get" class="tsd-kind-icon">GET</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#head" class="tsd-kind-icon">HEAD</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#method" class="tsd-kind-icon">METHOD</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#options" class="tsd-kind-icon">OPTIONS</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#patch" class="tsd-kind-icon">PATCH</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#post" class="tsd-kind-icon">POST</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#put" class="tsd-kind-icon">PUT</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#requestoptions" class="tsd-kind-icon">Request<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#response" class="tsd-kind-icon">Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#responsetype" class="tsd-kind-icon">Response<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#result" class="tsd-kind-icon">Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#resultmapping" class="tsd-kind-icon">Result<wbr>Mapping</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#serializer" class="tsd-kind-icon">Serializer</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#trace" class="tsd-kind-icon">TRACE</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#makequerystring" class="tsd-kind-icon">make<wbr>Query<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#makerequest" class="tsd-kind-icon">make<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#defaultserializers" class="tsd-kind-icon">default<wbr>Serializers</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#defaults" class="tsd-kind-icon">defaults</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
