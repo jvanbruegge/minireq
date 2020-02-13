@@ -13,7 +13,8 @@
     "debug": "DEBUG=1 pnpm test",
     "test:normal": "karma start",
     "start-server": "ts-node test/support/server.ts",
-    "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll"
+    "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll",
+    "prepublishOnly": "pnpm run build && pnpm test"
   },
   "author": "Jan van Brügge",
   "license": "MIT",
