@@ -5,6 +5,8 @@ on:
       - 'src/**'
       - 'README.md'
       - '.github/workflows/docs.yml'
+    branches:
+      - master
 
 jobs:
   build:
