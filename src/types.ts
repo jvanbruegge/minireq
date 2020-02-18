@@ -37,10 +37,12 @@ export type ResultMapping<T> = {
 export type RequestFn<T = any> = RequestFunction<T, ResponseType>;
 
 export type RequestFunction<T = any, Type extends ResponseType = 'text'> = (
-    options: RequestOptions<METHOD, Type>
+    options: RequestOpts<METHOD, Type>
 ) => Result<ResultMapping<T>[Type]>;
 
-export type RequestOptions<Method, Type extends ResponseType> = {
+export type RequestOptions = RequestOpts<METHOD, ResponseType>;
+
+export type RequestOpts<Method, Type extends ResponseType> = {
     method: Method;
     url: string;
     headers?: {
