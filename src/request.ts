@@ -1,6 +1,7 @@
 import {
     METHOD,
     Serializer,
+    RequestOpts,
     RequestOptions,
     ResponseType,
     Result,
@@ -19,12 +20,12 @@ const defaults = {
 
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
-    defaultOptions: Partial<RequestOptions<METHOD, ResponseType>> = {}
+    defaultOptions: Partial<RequestOptions> = {}
 ): <T = any, Type extends ResponseType = 'text'>(
-    options: RequestOptions<METHOD, Type>
+    options: RequestOpts<METHOD, Type>
 ) => Result<ResultMapping<T>[Type]> {
     return function request<T = any, Type extends ResponseType = 'text'>(
-        options: RequestOptions<METHOD, Type>
+        options: RequestOpts<METHOD, Type>
     ): Result<ResultMapping<T>[Type]> {
         let abort: any;
 
