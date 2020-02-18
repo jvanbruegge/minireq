@@ -50,7 +50,8 @@ const { promise } = request({
         name: 'Peter',
         age: 50,
         children: []
-    }
+    },
+    timeout: 500
 });
 
 promise.then(({ status, data }) => {
