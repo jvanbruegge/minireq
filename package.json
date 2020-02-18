@@ -14,7 +14,8 @@
     "test:normal": "karma start",
     "start-server": "ts-node test/support/server.ts",
     "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll",
-    "prepublishOnly": "pnpm run build && pnpm test"
+    "prepublishOnly": "pnpm run build && pnpm test",
+    "format": "prettier --write './{src,test}/**/*.ts'"
   },
   "author": "Jan van Brügge",
   "license": "MIT",
@@ -35,6 +36,7 @@
     "karma-typescript": "^4.1.1",
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
+    "prettier": "^1.19.1",
     "rollup": "^1.31.0",
     "start-server-and-test": "^1.10.8",
     "ts-node": "^8.6.2",
@@ -42,6 +44,7 @@
     "typescript": "^3.7.5"
   },
   "prettier": {
-    "singleQuote": true
+    "singleQuote": true,
+    "tabWidth": 4
   }
 }

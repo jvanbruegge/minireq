@@ -15,6 +15,7 @@ devDependencies:
   karma-typescript: 4.1.1_karma@4.4.1+typescript@3.7.5
   mocha: 7.0.1
   nyc: 15.0.0
+  prettier: 1.19.1
   rollup: 1.31.0
   start-server-and-test: 1.10.8
   ts-node: 8.6.2_typescript@3.7.5
@@ -3134,6 +3135,13 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
+  /prettier/1.19.1:
+    dev: true
+    engines:
+      node: '>=4'
+    hasBin: true
+    resolution:
+      integrity: sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
   /process-nextick-args/2.0.1:
     dev: true
     resolution:
@@ -4460,6 +4468,7 @@ specifiers:
   karma-typescript: ^4.1.1
   mocha: ^7.0.1
   nyc: ^15.0.0
+  prettier: ^1.19.1
   rollup: ^1.31.0
   start-server-and-test: ^1.10.8
   ts-node: ^8.6.2
