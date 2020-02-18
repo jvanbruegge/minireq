@@ -85,6 +85,11 @@
     url: <span class="hljs-string">'/api/users'</span>
 });
 
+<span class="hljs-comment">// Abort on user click</span>
+<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'button.abortRequest'</span>).addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    abort();
+});
+
 promise.then(<span class="hljs-function">(<span class="hljs-params">{ status, data }</span>) =&gt;</span> {
     <span class="hljs-keyword">if</span> (status === <span class="hljs-number">200</span>) {
         <span class="hljs-built_in">console</span>.log(data.name);
