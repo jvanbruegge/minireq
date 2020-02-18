@@ -24,6 +24,11 @@ const { promise, abort } = request({
     url: '/api/users'
 });
 
+// Abort on user click
+document.querySelector('button.abortRequest').addEventListener('click', () => {
+    abort();
+});
+
 promise.then(({ status, data }) => {
     if (status === 200) {
         console.log(data.name);
