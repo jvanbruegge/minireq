@@ -1,8 +1,7 @@
-name: Continous Integration
+name: Minireq
 on:
   push:
     paths-ignore:
-      - 'docs/**'
       - '**.md'
 
 jobs:
@@ -29,21 +28,18 @@ jobs:
         id: cache-pnpm-store
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: cd minireq && pnpm install
 
       - name: Build project
-        run: pnpm run build
+        run: cd minireq && pnpm run build
 
       - name: Run tests
-        run: pnpm test
+        run: cd minireq && pnpm test
 
       - name: Upload coverage
-        env:
-            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
-        shell: bash
+        uses: codecov/codecov-action@v1
