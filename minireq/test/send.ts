@@ -10,13 +10,13 @@ describe('send tests', () => {
         const str = JSON.stringify({
             name: 'Hans',
             age: 99,
-            children: []
+            children: [],
         });
 
         const { promise } = request({
             method: 'POST',
             url: url('/users'),
-            send: str
+            send: str,
         });
 
         return promise.then(({ status, data }) => {
@@ -31,9 +31,9 @@ describe('send tests', () => {
                 method: 'POST',
                 url: url('/users'),
                 send: {
-                    foo: 'bar'
+                    foo: 'bar',
                 },
-                contentType: 'application/xml'
+                contentType: 'application/xml',
             })
         );
     });

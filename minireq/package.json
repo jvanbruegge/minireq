@@ -43,11 +43,8 @@
     "typedoc": "^0.16.9",
     "typescript": "^3.7.5"
   },
-  "prettier": {
-    "singleQuote": true,
-    "tabWidth": 4
-  },
   "dependencies": {
     "minireq-types": "workspace:^1.0.0"
-  }
+  },
+  "prettier": "../.prettierrc.json"
 }

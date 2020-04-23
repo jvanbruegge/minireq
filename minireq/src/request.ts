@@ -5,17 +5,17 @@ import {
     RequestOptions,
     ResponseType,
     Result,
-    ResultMapping
+    ResultMapping,
 } from 'minireq-types';
 
 export const defaultSerializers = {
-    'application/json': { parse: JSON.parse, convert: JSON.stringify }
+    'application/json': { parse: JSON.parse, convert: JSON.stringify },
 };
 
 const defaults = {
     contentType: 'application/json',
     responseType: 'text' as 'text',
-    accept: '*/*'
+    accept: '*/*',
 };
 
 export function makeRequest(
@@ -60,7 +60,7 @@ export function makeRequest(
 
             resolve({
                 status: request.status,
-                data: response
+                data: response,
             });
         });
         request.addEventListener('error', reject);
@@ -123,7 +123,7 @@ export function makeRequest(
                 resolve = res;
                 reject = rej;
             }),
-            abort
+            abort,
         };
     };
 }

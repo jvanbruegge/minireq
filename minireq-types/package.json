@@ -8,5 +8,6 @@
     "build": "tsc"
   },
   "author": "Jan van Brügge",
-  "license": "MIT"
+  "license": "MIT",
+  "prettier": "../.prettierrc.json"
 }

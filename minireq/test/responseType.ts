@@ -10,15 +10,15 @@ describe('responseType tests', () => {
         const { promise } = request({
             method: 'GET',
             url: url('/document/html'),
-            responseType: 'document'
+            responseType: 'document',
         });
 
         const structure = {
             tag: 'HTML',
             children: [
                 { tag: 'HEAD', children: [] },
-                { tag: 'BODY', children: [{ tag: 'DIV', children: [] }] }
-            ]
+                { tag: 'BODY', children: [{ tag: 'DIV', children: [] }] },
+            ],
         };
 
         return promise.then(({ status, data }) => {
@@ -28,7 +28,7 @@ describe('responseType tests', () => {
             const buildStructure = (node: Element): any => {
                 return {
                     tag: node.tagName,
-                    children: [].slice.call(node.children).map(buildStructure)
+                    children: [].slice.call(node.children).map(buildStructure),
                 };
             };
 

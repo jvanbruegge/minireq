@@ -14,8 +14,8 @@ describe('header tests', () => {
             url: url('/headers'),
             headers: {
                 'X-Auth-Token': 'superSecretToken',
-                'X-Echo': echo
-            }
+                'X-Echo': echo,
+            },
         });
 
         return promise.then(({ status, data }) => {
@@ -30,8 +30,8 @@ describe('header tests', () => {
             url: url('/secret'),
             auth: {
                 user: 'admin',
-                password: 'admin'
-            }
+                password: 'admin',
+            },
         });
 
         return promise.then(({ status }) => {

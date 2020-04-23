@@ -9,7 +9,7 @@ describe('simple tests', () => {
     it('should be able to make a simple GET request', () => {
         const { promise } = request({
             method: 'GET',
-            url: url('/users')
+            url: url('/users'),
         });
 
         return promise.then(({ status, data }) => {
@@ -22,13 +22,13 @@ describe('simple tests', () => {
         const user = {
             name: 'Ingo',
             age: 9,
-            children: []
+            children: [],
         };
 
         const { promise } = request({
             method: 'POST',
             url: url('/users'),
-            send: user
+            send: user,
         });
 
         return promise.then(({ status, data }) => {
@@ -40,7 +40,7 @@ describe('simple tests', () => {
     it('should have a clean slate again', () => {
         const { promise } = request({
             method: 'GET',
-            url: url('/users')
+            url: url('/users'),
         });
 
         return promise.then(({ status, data }) => {

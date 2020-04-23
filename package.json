@@ -1,7 +1,9 @@
 {
   "private": true,
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "format": "prettier --write './*/{src,test}/*.ts'"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jvanbruegge/minireq.git"
@@ -14,5 +16,8 @@
   "homepage": "https://github.com/jvanbruegge/minireq#readme",
   "dependencies": {
     "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
   }
 }

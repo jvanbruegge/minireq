@@ -10,7 +10,7 @@ describe('queryString', () => {
         const { promise } = request({
             method: 'GET',
             url: url('/users'),
-            query: '?id=1'
+            query: '?id=1',
         });
 
         return promise.then(({ status, data }) => {
@@ -23,7 +23,7 @@ describe('queryString', () => {
         const { promise } = request({
             method: 'GET',
             url: url('/users'),
-            query: 'age=40'
+            query: 'age=40',
         });
 
         return promise.then(({ status, data }) => {
@@ -37,7 +37,7 @@ describe('queryString', () => {
             request({
                 method: 'GET',
                 url: url('/users'),
-                query: {}
+                query: {},
             })
         );
     });
@@ -48,8 +48,8 @@ describe('queryString', () => {
             url: url('/users'),
             query: {
                 name: 'Agnes',
-                age: 18
-            }
+                age: 18,
+            },
         });
 
         return promise.then(({ status, data }) => {

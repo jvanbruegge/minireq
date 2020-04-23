@@ -76,7 +76,7 @@ app.get('/secret', (req: any, res: any) => {
 app.post('/users', (req: any, res: any) => {
     res.status(201).json({
         ...req.body,
-        id: 4
+        id: 4,
     });
 });
 

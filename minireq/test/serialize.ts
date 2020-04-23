@@ -6,22 +6,22 @@ import { makeRequest, defaultSerializers } from '../src/index';
 describe('serialization', () => {
     it('should be able to handle a serialize-only serializer', () => {
         const serializer = {
-            convert: JSON.stringify
+            convert: JSON.stringify,
         };
 
         const request = makeRequest({
-            'application/json': serializer
+            'application/json': serializer,
         });
 
         const { promise } = request({
             method: 'GET',
-            url: url('/users')
+            url: url('/users'),
         });
 
         const newUser = {
             name: 'Hans',
             age: 65,
-            children: []
+            children: [],
         };
 
         return promise
@@ -32,7 +32,7 @@ describe('serialization', () => {
                 return request({
                     method: 'POST',
                     url: url('/users'),
-                    send: newUser
+                    send: newUser,
                 }).promise;
             })
             .then(({ status, data }) => {
@@ -46,22 +46,22 @@ describe('serialization', () => {
 
     it('should be able to handle a deserialize-only serializer', () => {
         const serializer = {
-            parse: JSON.parse
+            parse: JSON.parse,
         };
 
         const request = makeRequest({
-            'application/json': serializer
+            'application/json': serializer,
         });
 
         const { promise } = request({
             method: 'GET',
-            url: url('/users')
+            url: url('/users'),
         });
 
         const newUser = {
             name: 'Hans',
             age: 65,
-            children: []
+            children: [],
         };
 
         return promise.then(({ status, data }) => {
@@ -72,7 +72,7 @@ describe('serialization', () => {
                 request({
                     method: 'POST',
                     url: url('/users'),
-                    send: newUser
+                    send: newUser,
                 })
             );
         });
@@ -87,17 +87,17 @@ describe('serialization', () => {
                 parse: (s: string) => {
                     usedNdJson = true;
                     return s.split('\n').map(x => JSON.parse(x));
-                }
-            }
+                },
+            },
         };
 
         const request = makeRequest(serializers, {
-            accept: 'application/ndjson'
+            accept: 'application/ndjson',
         });
 
         const { promise } = request({
             method: 'GET',
-            url: url('/users')
+            url: url('/users'),
         });
 
         return promise.then(({ status, data }) => {

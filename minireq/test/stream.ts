@@ -14,7 +14,7 @@ describe('abort tests', () => {
     it('should be able to receive streaming responses', () => {
         const { promise } = request({
             method: 'GET',
-            url: url('/streaming')
+            url: url('/streaming'),
         });
 
         return promise.then(({ status, data }) => {
@@ -26,7 +26,7 @@ describe('abort tests', () => {
     it('should not send data after aborting request', done => {
         const { promise, abort } = request({
             method: 'GET',
-            url: url('/streaming')
+            url: url('/streaming'),
         });
 
         setTimeout(abort, 25);
@@ -44,7 +44,7 @@ describe('abort tests', () => {
             url: url('/streaming'),
             progress: ev => {
                 progressed = ev.loaded > 0;
-            }
+            },
         });
 
         return promise.then(({ status, data }) => {
@@ -62,7 +62,7 @@ describe('abort tests', () => {
             url: url('/streaming'),
             progress: ev => {
                 progressed = ev.loaded > 0;
-            }
+            },
         });
 
         promise.then(() => assert.fail('should not deliver data'));
@@ -77,7 +77,7 @@ describe('abort tests', () => {
             method: 'GET',
             url: url('/streaming'),
             timeout: 60,
-            onTimeout: () => done()
+            onTimeout: () => done(),
         });
 
         promise.then(() => assert.fail('should not deliver data'));
