@@ -1,3 +1,3 @@
 export { makeRequest, defaultSerializers } from './request';
 
-export * from './types';
+export * from 'minireq-types';

@@ -1,12 +1,4 @@
 {
-  "compilerOptions": {
-    "removeComments": false,
-    "sourceMap": true,
-    "declaration": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "target": "es6",
-    "outDir": "build"
-  },
+  "extends": "../tsconfig.json",
   "include": ["./src/**/*", "./test/**/*"]
 }

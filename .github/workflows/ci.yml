@@ -33,13 +33,13 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: cd minireq && pnpm install
+        run: pnpm recursive install
 
       - name: Build project
-        run: cd minireq && pnpm run build
+        run: pnpm recursive run build
 
       - name: Run tests
-        run: cd minireq && pnpm test
+        run: pnpm recursive test
 
-      - name: Upload coverage
-        uses: codecov/codecov-action@v1
+      #- name: Upload coverage
+      #uses: codecov/codecov-action@v1

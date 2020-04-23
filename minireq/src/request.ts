@@ -6,7 +6,7 @@ import {
     ResponseType,
     Result,
     ResultMapping
-} from './types';
+} from 'minireq-types';
 
 export const defaultSerializers = {
     'application/json': { parse: JSON.parse, convert: JSON.stringify }

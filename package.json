@@ -1,8 +1,7 @@
 {
   "private": true,
   "license": "MIT",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jvanbruegge/minireq.git"
@@ -12,5 +11,8 @@
   "bugs": {
     "url": "https://github.com/jvanbruegge/minireq/issues"
   },
-  "homepage": "https://github.com/jvanbruegge/minireq#readme"
+  "homepage": "https://github.com/jvanbruegge/minireq#readme",
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
 }
