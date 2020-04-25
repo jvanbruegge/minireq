@@ -2,9 +2,14 @@ const debug = process.env.DEBUG === '1';
 
 module.exports = config => {
     config.set({
+        basePath: '..',
+
         frameworks: ['mocha', 'karma-typescript'],
 
-        files: [{ pattern: 'src/**/*.ts' }, { pattern: 'test/*.ts' }],
+        files: [
+            { pattern: 'minireq/src/**/*.ts' },
+            { pattern: '{.,minireq}/test/**.ts' }
+        ],
 
         plugins: [
             'karma-mocha',
