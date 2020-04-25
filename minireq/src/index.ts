@@ -5,18 +5,11 @@ import {
     RequestOptions,
     ResponseType,
     Result,
-    ResultMapping
-} from './types';
-
-export const defaultSerializers = {
-    'application/json': { parse: JSON.parse, convert: JSON.stringify }
-};
-
-const defaults = {
-    contentType: 'application/json',
-    responseType: 'text' as 'text',
-    accept: '*/*'
-};
+    ResultMapping,
+    makeQueryString,
+    defaultSerializers,
+    defaults
+} from 'minireq-common';
 
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
@@ -27,10 +20,8 @@ export function makeRequest(
     return function request<T = any, Type extends ResponseType = 'text'>(
         options: RequestOpts<METHOD, Type>
     ): Result<ResultMapping<T>[Type]> {
-        let abort: any;
-
         const opts = { ...defaults, ...defaultOptions, ...options };
-        const url = opts.url + (opts.query ? makeQueryString(opts.query) : '');
+        const url = opts.url + makeQueryString(opts.query);
 
         // Because fuck JavaScript Promises and their garbage error handing regarding throw
         let resolve: any;
@@ -38,7 +29,7 @@ export function makeRequest(
 
         const request = new XMLHttpRequest();
 
-        abort = () => {
+        const abort = () => {
             request.abort();
         };
 
@@ -107,8 +98,10 @@ export function makeRequest(
                 opts.send instanceof URLSearchParams
             ) {
                 request.send(opts.send);
-            } else if (serializers[opts.contentType]?.convert) {
-                request.send(serializers[opts.contentType].convert!(opts.send));
+            } else if (serializers[opts.contentType!]?.convert) {
+                request.send(
+                    serializers[opts.contentType!].convert!(opts.send)
+                );
             } else {
                 throw new Error(
                     `Could not find a serializer for content type ${opts.contentType}`
@@ -126,23 +119,4 @@ export function makeRequest(
             abort
         };
     };
-}
-
-function makeQueryString(query: Record<string, any> | string): string {
-    if (typeof query === 'string') {
-        if (query.charAt(0) === '?') return query;
-        else return '?' + query;
-    }
-
-    let str = '?';
-
-    for (const key in query) {
-        str += key + '=' + query[key] + '&';
-    }
-
-    if (str === '?') {
-        throw new Error('An empty object is not valid as query parameter');
-    }
-
-    return str;
 }

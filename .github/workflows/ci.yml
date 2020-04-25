@@ -1,49 +1,37 @@
-name: Continous Integration
+name: Build
 on:
   push:
     paths-ignore:
-      - 'docs/**'
       - '**.md'
 
 jobs:
   build:
     name: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-18.04, windows-2019]  #[ubuntu-18.04, windows-2019, macos-latest]
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Install pnpm (Linux)
+      - name: Install pnpm
         run: sudo npm install --global pnpm
-        if: matrix.os == 'ubuntu-18.04'
-
-      - name: Install pnpm (Windows)
-        run: npm install --global pnpm
-        if: matrix.os == 'windows-2019'
 
       - name: Cache dependencies
         uses: actions/cache@v1
         id: cache-pnpm-store
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm recursive install
 
       - name: Build project
-        run: pnpm run build
+        run: pnpm recursive run build
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm recursive test --workspace-concurrency 1
 
-      - name: Upload coverage
-        env:
-            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
-        shell: bash
+      #- name: Upload coverage
+      #uses: codecov/codecov-action@v1

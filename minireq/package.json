@@ -1,0 +1,50 @@
+{
+  "name": "minireq",
+  "version": "1.1.0",
+  "description": "A minimal request library for the browser",
+  "main": "build/bundle.cjs.js",
+  "module": "build/bundle.esm.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
+    "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
+    "test": "start-server-and-test start-server 3000 test:normal",
+    "debug": "cross-env DEBUG=1 pnpm test",
+    "test:normal": "karma start",
+    "start-server": "ts-node ../test/support/server.ts",
+    "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll",
+    "prepublishOnly": "pnpm run build && pnpm test",
+    "format": "prettier --write './{src,test}/**/*.ts'"
+  },
+  "author": "Jan van Brügge",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/assert": "^1.4.6",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.2",
+    "assert": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "karma": "^5.0.2",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
+    "karma-firefox-launcher": "^1.3.0",
+    "karma-mocha": "^2.0.0",
+    "karma-typescript": "^5.0.2",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
+    "prettier": "^2.0.5",
+    "rollup": "^2.7.2",
+    "start-server-and-test": "^1.11.0",
+    "ts-node": "^8.9.0",
+    "typedoc": "^0.17.4",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "minireq-common": "workspace:^1.0.0"
+  },
+  "prettier": "../configs/.prettierrc.json"
+}

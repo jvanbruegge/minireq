@@ -42,6 +42,12 @@ export type RequestFunction<T = any, Type extends ResponseType = 'text'> = (
 
 export type RequestOptions = RequestOpts<METHOD, ResponseType>;
 
+export type Progress = {
+    lengthComputable: boolean;
+    loaded: number;
+    total: number;
+};
+
 export type RequestOpts<Method, Type extends ResponseType> = {
     method: Method;
     url: string;
@@ -78,7 +84,7 @@ export type RequestOpts<Method, Type extends ResponseType> = {
     attach?: {
         [field: string]: Blob | File;
     };
-    progress?: (x: ProgressEvent) => void;
+    progress?: (x: Progress) => void;
     agent?: {
         key: string;
         cert: string;
@@ -92,7 +98,7 @@ export type RequestOpts<Method, Type extends ResponseType> = {
      * Timeout in milliseconds
      */
     timeout?: number;
-    onTimeout?: (x: ProgressEvent) => void;
+    onTimeout?: (x: Progress) => void;
 };
 
 export type Response<T> = {
