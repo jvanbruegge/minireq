@@ -1,4 +1,4 @@
 packages:
     - minireq
-    - minireq-types
+    - minireq-common
     - minireq-node

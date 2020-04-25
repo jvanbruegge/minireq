@@ -14,10 +14,17 @@
     "url": "https://github.com/jvanbruegge/minireq/issues"
   },
   "homepage": "https://github.com/jvanbruegge/minireq#readme",
-  "dependencies": {
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "minireq-common": "workspace:^1.0.0",
+    "prettier": "^2.0.5",
+    "rollup": "^2.7.2",
     "typescript": "^3.8.3"
   },
-  "devDependencies": {
-    "prettier": "^2.0.5"
-  }
+  "prettier": "./configs/.prettierrc.json"
 }
