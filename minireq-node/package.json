@@ -10,7 +10,8 @@
     "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
     "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
     "test": "start-server-and-test start-server 3000 test:normal",
-    "test:normal": "ts-mocha test/**/*.ts",
+    "test:normal": "nyc --reporter text --reporter json --reporter html pnpm run test:no_cover",
+    "test:no_cover": "ts-mocha test/**/*.ts",
     "start-server": "ts-node ../test/support/server.ts"
   },
   "author": "Jan van Brügge",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@types/node": "^13.13.2",
     "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
     "start-server-and-test": "^1.11.0",
     "ts-mocha": "^7.0.0",
     "ts-node": "^8.9.0"

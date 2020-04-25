@@ -82,6 +82,7 @@ importers:
     devDependencies:
       '@types/node': 13.13.2
       mocha: 7.1.1
+      nyc: 15.0.1
       start-server-and-test: 1.11.0
       ts-mocha: 7.0.0_mocha@7.1.1
       ts-node: 8.9.0
@@ -89,6 +90,7 @@ importers:
       '@types/node': ^13.13.2
       minireq-common: 'workspace:^1.0.0'
       mocha: ^7.1.1
+      nyc: ^15.0.1
       start-server-and-test: ^1.11.0
       ts-mocha: ^7.0.0
       ts-node: ^8.9.0
