@@ -2,7 +2,7 @@ name: Documentation
 on:
   push:
     paths:
-      - 'src/**'
+      - 'minireq/src/**'
       - 'README.md'
       - '.github/workflows/docs.yml'
     branches:
@@ -29,13 +29,16 @@ jobs:
             docs-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm recursive install
+
+      - name: Build packages
+        run: pnpm recursive run build
 
       - name: Build documentation
-        run: pnpm run docs
+        run: cd minireq && pnpm run docs
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./docs
+          publish_dir: ./minireq/docs
