@@ -31,7 +31,7 @@ jobs:
         run: pnpm recursive run build
 
       - name: Run tests
-        run: pnpm recursive test
+        run: pnpm recursive test --workspace-concurrency 1
 
       #- name: Upload coverage
       #uses: codecov/codecov-action@v1
