@@ -7,10 +7,10 @@
   "typings": "build/index.d.ts",
   "scripts": {
     "build": "tsc --project tsconfig.build.json && pnpm run build:esm && pnpm run build:cjs",
-    "build:esm": "BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
-    "build:cjs": "BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
+    "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
+    "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
     "test": "start-server-and-test start-server 3000 test:normal",
-    "debug": "DEBUG=1 pnpm test",
+    "debug": "cross-env DEBUG=1 pnpm test",
     "test:normal": "karma start",
     "start-server": "ts-node ../test/support/server.ts",
     "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll",
