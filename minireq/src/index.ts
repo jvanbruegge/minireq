@@ -81,7 +81,33 @@ export function makeRequest(
         }
 
         if (opts.send) {
-            request.send(serializeSend(opts, serializers));
+            if (
+                typeof opts.send === 'string' ||
+                opts.send instanceof Blob ||
+                opts.send instanceof ArrayBuffer ||
+                opts.send instanceof Int8Array ||
+                opts.send instanceof Uint8Array ||
+                opts.send instanceof Uint8ClampedArray ||
+                opts.send instanceof Int16Array ||
+                opts.send instanceof Uint16Array ||
+                opts.send instanceof Int32Array ||
+                opts.send instanceof Uint32Array ||
+                opts.send instanceof Float32Array ||
+                opts.send instanceof Float64Array ||
+                opts.send instanceof DataView ||
+                opts.send instanceof FormData ||
+                opts.send instanceof URLSearchParams
+            ) {
+                request.send(opts.send);
+            } else if (serializers[opts.contentType!]?.convert) {
+                request.send(
+                    serializers[opts.contentType!].convert!(opts.send)
+                );
+            } else {
+                throw new Error(
+                    `Could not find a serializer for content type ${opts.contentType}`
+                );
+            }
         } else {
             request.send();
         }

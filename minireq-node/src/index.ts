@@ -7,7 +7,6 @@ import {
     Result,
     ResultMapping,
     makeQueryString,
-    serializeSend,
     defaultSerializers,
     defaults
 } from 'minireq-common';
@@ -32,9 +31,6 @@ export function makeRequest(
             );
         }
 
-        let resolve: any;
-        let reject: any;
-
         const h = /^http:\/\//.test(opts.url) ? http : https;
 
         const headers = {
@@ -44,20 +40,21 @@ export function makeRequest(
         } as Record<string, string>;
 
         if (opts.auth) {
-            headers.Authorization = `Basic ${btoa(
+            const base64 = Buffer.from(
                 opts.auth.user + ':' + opts.auth.password
-            )}`;
+            ).toString('base64');
+            headers.Authorization = `Basic ${base64}`;
         }
 
         let data: any = '';
-        const req = h.request(
-            url,
-            {
-                method: opts.method,
-                timeout: opts.timeout,
-                headers
-            },
-            res => {
+        const req = h.request(url, {
+            method: opts.method,
+            timeout: opts.timeout,
+            headers
+        });
+
+        const promise = new Promise<any>((resolve, reject) => {
+            req.on('response', res => {
                 if (opts.responseType !== 'arraybuffer') {
                     res.setEncoding('utf-8');
                 }
@@ -77,13 +74,15 @@ export function makeRequest(
                     let response: any = Array.isArray(data)
                         ? Buffer.concat(data)
                         : data;
+
                     if (
                         typeof response === 'string' &&
                         opts.responseType === 'text'
                     ) {
                         const mimeType = (res.headers[
-                            'Content-Type'
+                            'content-type'
                         ] as string)?.split(';')[0];
+
                         if (mimeType && serializers[mimeType]?.parse) {
                             response = serializers[mimeType].parse!(response);
                         }
@@ -94,21 +93,23 @@ export function makeRequest(
                         data: response
                     });
                 });
-            }
-        );
+            });
 
-        req.on('error', reject);
+            req.on('error', reject);
+        });
 
         if (opts.send) {
-            req.write(serializeSend(opts, serializers));
+            if (typeof opts.send === 'string') {
+                //TODO: Add rest of possible types
+                req.write(opts.send);
+            } else {
+                req.write(serializers[opts.contentType!].convert!(opts.send));
+            }
         }
         req.end();
 
         return {
-            promise: new Promise<any>((res, rej) => {
-                resolve = res;
-                reject = rej;
-            }),
+            promise,
             abort: () => req.abort()
         };
     };

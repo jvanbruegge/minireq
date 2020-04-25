@@ -3,16 +3,14 @@ import { db, url } from './helpers';
 
 import { RequestFn } from 'minireq-common';
 
-import { makeHeaderTests } from './headers';
-import { makeQueryTests } from './query';
-import { makeResponseTypeTests } from './responseType';
-import { makeSendTests } from './send';
-import { makeSerializationTests } from './serialize';
-import { makeStreamTests } from './stream';
+export { makeHeaderTests } from './headers';
+export { makeQueryTests } from './query';
+export { makeResponseTypeTests } from './responseType';
+export { makeSendTests } from './send';
+export { makeSerializationTests } from './serialize';
+export { makeStreamTests } from './stream';
 
-export function makeTestSuite(makeRequest: any) {
-    const request: RequestFn = makeRequest();
-
+export function makeSimpleTests(request: RequestFn) {
     describe('simple tests', () => {
         it('should be able to make a simple GET request', () => {
             const { promise } = request({
@@ -57,11 +55,4 @@ export function makeTestSuite(makeRequest: any) {
             });
         });
     });
-
-    makeHeaderTests(request);
-    makeQueryTests(request);
-    makeResponseTypeTests(request);
-    makeSendTests(request);
-    makeSerializationTests(makeRequest);
-    makeStreamTests(request);
 }

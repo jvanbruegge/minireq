@@ -1,4 +1,20 @@
-import { makeTestSuite } from '../../test/index';
+import {
+    makeSimpleTests,
+    makeHeaderTests,
+    makeQueryTests,
+    makeResponseTypeTests,
+    makeSendTests,
+    makeSerializationTests,
+    makeStreamTests
+} from '../../test/index';
 import { makeRequest } from '../src/index';
 
-makeTestSuite(makeRequest);
+const request = makeRequest();
+
+makeSimpleTests(request);
+makeHeaderTests(request);
+makeQueryTests(request);
+makeResponseTypeTests(request);
+makeSendTests(request);
+makeSerializationTests(makeRequest);
+makeStreamTests(request);
