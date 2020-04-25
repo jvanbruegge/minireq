@@ -12,13 +12,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Install pnpm (Linux)
+      - name: Install pnpm
         run: sudo npm install --global pnpm
-        if: matrix.os == 'ubuntu-18.04'
-
-      - name: Install pnpm (Windows)
-        run: npm install --global pnpm
-        if: matrix.os == 'windows-2019'
 
       - name: Cache dependencies
         uses: actions/cache@v1
