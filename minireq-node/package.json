@@ -1,0 +1,25 @@
+{
+  "name": "minireq-node",
+  "version": "1.0.0",
+  "description": "A minimal request library for nodejs",
+  "main": "build/bundle.cjs.js",
+  "module": "build/bundle.esm.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc && pnpm run build:cjs && pnpm run build:esm",
+    "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
+    "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
+    "test": "ts-mocha test/**/*.ts"
+  },
+  "author": "Jan van Brügge",
+  "license": "MIT",
+  "dependencies": {
+    "minireq-common": "workspace:^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.2",
+    "mocha": "^7.1.1",
+    "ts-mocha": "^7.0.0"
+  },
+  "prettier": "../configs/.prettierrc.json"
+}

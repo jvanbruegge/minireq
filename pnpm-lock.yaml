@@ -81,9 +81,13 @@ importers:
       minireq-common: 'link:../minireq-common'
     devDependencies:
       '@types/node': 13.13.2
+      mocha: 7.1.1
+      ts-mocha: 7.0.0_mocha@7.1.1
     specifiers:
       '@types/node': ^13.13.2
       minireq-common: 'workspace:^1.0.0'
+      mocha: ^7.1.1
+      ts-mocha: ^7.0.0
 lockfileVersion: 5.1
 packages:
   /@babel/code-frame/7.8.3:
@@ -339,6 +343,11 @@ packages:
     dev: true
     resolution:
       integrity: sha512-n/mr9tZI83kd4azlPG5y997C/M4DNABK9yErhFM6hKdym4kkmd9j0vtsJyjFIwfRBxtrxZtAfGZCNRIBMFLK5w==
+  /@types/json5/0.0.29:
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
   /@types/mime/2.0.1:
     dev: true
     resolution:
@@ -490,6 +499,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-wGUIVQXuehL5TCqQun8OW81jGzAWycqzFF8lFp+GOM5BXLYj3bKNsYC4daB7n6XjCqxQA/qgTJ+8ANR3acjrog==
+  /arrify/1.0.1:
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
   /asn1.js/4.10.1:
     dependencies:
       bn.js: 4.11.8
@@ -1076,7 +1091,7 @@ packages:
       integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
   /debug/3.2.6:
     dependencies:
-      ms: 2.1.2
+      ms: 2.1.1
     dev: true
     resolution:
       integrity: sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
@@ -2115,6 +2130,14 @@ packages:
     dev: true
     resolution:
       integrity: sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
+  /json5/1.0.1:
+    dependencies:
+      minimist: 1.2.5
+    dev: true
+    hasBin: true
+    optional: true
+    resolution:
+      integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
   /json5/2.1.3:
     dependencies:
       minimist: 1.2.5
@@ -2443,6 +2466,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-P+2gwrFqx8lhew375MQHHeTlY8AuOJSrGf0R5ddkEndUkmwpgUob/vQuBD1V22/Cw1/lJr4x+EjllSezBThzBg==
+  /mkdirp/0.5.5:
+    dependencies:
+      minimist: 1.2.5
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   /mocha/7.1.1:
     dependencies:
       ansi-colors: 3.2.3
@@ -3511,6 +3541,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==
+  /strip-bom/3.0.0:
+    dev: true
+    engines:
+      node: '>=4'
+    optional: true
+    resolution:
+      integrity: sha1-IzTBjpx1n3vdVv3vfprj1YjmjtM=
   /strip-bom/4.0.0:
     dev: true
     engines:
@@ -3624,6 +3661,36 @@ packages:
       node: '>=0.8'
     resolution:
       integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==
+  /ts-mocha/7.0.0_mocha@7.1.1:
+    dependencies:
+      mocha: 7.1.1
+      ts-node: 7.0.1
+    dev: true
+    engines:
+      node: '>= 6.X.X'
+    hasBin: true
+    optionalDependencies:
+      tsconfig-paths: 3.9.0
+    peerDependencies:
+      mocha: ^3.X.X || ^4.X.X || ^5.X.X || ^6.X.X || ^7.X.X
+    resolution:
+      integrity: sha512-7WfkQw1W6JZXG5m4E1w2e945uWzBoZqmnOHvpMu0v+zvyKLdUQeTtRMfcQsVEKsUnYL6nTyH4okRt2PZucmFXQ==
+  /ts-node/7.0.1:
+    dependencies:
+      arrify: 1.0.1
+      buffer-from: 1.1.1
+      diff: 3.5.0
+      make-error: 1.3.6
+      minimist: 1.2.5
+      mkdirp: 0.5.5
+      source-map-support: 0.5.19
+      yn: 2.0.0
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-BVwVbPJRspzNh2yfslyT1PSbl5uIk03EZlb493RKHN4qej/D06n1cEhjlOJG69oFsE7OT8XjpTUcYf6pKTLMhw==
   /ts-node/8.9.0_typescript@3.8.3:
     dependencies:
       arg: 4.1.3
@@ -3640,6 +3707,16 @@ packages:
       typescript: '>=2.7'
     resolution:
       integrity: sha512-rwkXfOs9zmoHrV8xE++dmNd6ZIS+nmHHCxcV53ekGJrxFLMbp+pizpPS07ARvhwneCIECPppOwbZHvw9sQtU4w==
+  /tsconfig-paths/3.9.0:
+    dependencies:
+      '@types/json5': 0.0.29
+      json5: 1.0.1
+      minimist: 1.2.5
+      strip-bom: 3.0.0
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==
   /tslib/1.11.1:
     dev: true
     resolution:
@@ -3978,6 +4055,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-AI4G2AlDIMNy28L47XagymyKxBk=
+  /yn/2.0.0:
+    dev: true
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-5a2ryKz0CPY4X8dklWhMiOavaJo=
   /yn/3.1.1:
     dev: true
     engines:
