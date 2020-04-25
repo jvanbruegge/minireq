@@ -1,4 +1,4 @@
-name: Minireq
+name: Build
 on:
   push:
     paths-ignore:
@@ -7,10 +7,7 @@ on:
 jobs:
   build:
     name: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-18.04, windows-2019]  #[ubuntu-18.04, windows-2019, macos-latest]
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
