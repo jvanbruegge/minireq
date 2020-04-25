@@ -6,6 +6,7 @@ import {
     ResponseType,
     Result,
     ResultMapping,
+    Progress,
     makeQueryString,
     defaultSerializers,
     defaults
@@ -53,6 +54,16 @@ export function makeRequest(
             headers
         });
 
+        let id: any = undefined;
+        if (opts.timeout) {
+            id = setTimeout(() => {
+                req.abort();
+                if (opts.onTimeout) {
+                    opts.onTimeout(makeProgress(data, undefined));
+                }
+            });
+        }
+
         const promise = new Promise<any>((resolve, reject) => {
             req.on('response', res => {
                 if (opts.responseType !== 'arraybuffer') {
@@ -68,9 +79,16 @@ export function makeRequest(
                             data.push(chunk);
                         }
                     }
+                    if (opts.progress) {
+                        opts.progress(
+                            makeProgress(data, res.headers['content-length'])
+                        );
+                    }
                 });
 
                 res.on('end', () => {
+                    if (id) clearTimeout(id);
+
                     let response: any = Array.isArray(data)
                         ? Buffer.concat(data)
                         : data;
@@ -94,8 +112,11 @@ export function makeRequest(
                     });
                 });
             });
-
-            req.on('error', reject);
+            req.on('error', err => {
+                if (!req.aborted) {
+                    reject(err);
+                }
+            });
         });
 
         if (opts.send) {
@@ -117,5 +138,27 @@ export function makeRequest(
             promise,
             abort: () => req.abort()
         };
+    };
+}
+
+function makeProgress(
+    data: string | Buffer[],
+    contentLength: string | undefined
+): Progress {
+    const lengthComputable = contentLength !== undefined;
+
+    const loaded =
+        typeof data === 'string'
+            ? Buffer.byteLength(data)
+            : data.reduce((acc, curr) => acc + curr.length, 0);
+
+    let total = 0;
+    if (lengthComputable) {
+        total = parseInt(contentLength!);
+    }
+    return {
+        lengthComputable,
+        loaded,
+        total
     };
 }

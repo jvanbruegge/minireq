@@ -68,7 +68,10 @@ export function makeStreamTests(request: RequestFn) {
 
             setTimeout(abort, 50);
 
-            setTimeout(done, 110);
+            setTimeout(() => {
+                assert.strictEqual(progressed, true);
+                done();
+            }, 110);
         });
 
         it('should allow to specify a timeout on the request', done => {

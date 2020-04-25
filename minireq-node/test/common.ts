@@ -18,4 +18,4 @@ makeQueryTests(request);
 makeResponseTypeTests(request);
 makeSendTests(request);
 makeSerializationTests(makeRequest);
-//makeStreamTests(request); // TODO: Get working
+makeStreamTests(request);
