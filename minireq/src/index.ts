@@ -8,8 +8,7 @@ import {
     ResultMapping,
     makeQueryString,
     defaultSerializers,
-    defaults,
-    serializeSend
+    defaults
 } from 'minireq-common';
 
 export function makeRequest(

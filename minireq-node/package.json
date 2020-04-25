@@ -6,9 +6,9 @@
   "module": "build/bundle.esm.js",
   "typings": "build/index.d.ts",
   "scripts": {
-    "build": "tsc && pnpm run build:cjs && pnpm run build:esm",
-    "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
-    "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
+    "build": "tsc --project tsconfig.build.json && pnpm run build:cjs && pnpm run build:esm",
+    "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c rollup.config.ts",
+    "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c rollup.config.ts",
     "test": "start-server-and-test start-server 3000 test:normal",
     "test:normal": "nyc --reporter text --reporter json --reporter html pnpm run test:no_cover",
     "test:no_cover": "ts-mocha test/**/*.ts",
