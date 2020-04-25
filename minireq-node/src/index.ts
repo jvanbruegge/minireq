@@ -102,8 +102,13 @@ export function makeRequest(
             if (typeof opts.send === 'string') {
                 //TODO: Add rest of possible types
                 req.write(opts.send);
-            } else {
+            } else if (serializers[opts.contentType!]?.convert) {
                 req.write(serializers[opts.contentType!].convert!(opts.send));
+            } else {
+                req.abort();
+                throw new Error(
+                    `Could not find a serializer for content type ${opts.contentType}`
+                );
             }
         }
         req.end();
