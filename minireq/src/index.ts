@@ -9,7 +9,7 @@ import {
     makeQueryString,
     defaultSerializers,
     defaults
-} from 'minireq-common';
+} from '@minireq/common';
 
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,

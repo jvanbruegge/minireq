@@ -1,6 +1,6 @@
 {
-  "name": "minireq-common",
-  "version": "1.0.0",
+  "name": "@minireq/common",
+  "version": "1.0.0-beta.0",
   "description": "A minimal request library for the browser - types only",
   "main": "build/bundle.cjs.js",
   "module": "build/bundle.esm.js",
@@ -9,6 +9,9 @@
     "build": "tsc && pnpm run build:esm && pnpm run build:cjs",
     "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
     "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "author": "Jan van Brügge",
   "license": "MIT",

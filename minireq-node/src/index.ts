@@ -10,7 +10,7 @@ import {
     makeQueryString,
     defaultSerializers,
     defaults
-} from 'minireq-common';
+} from '@minireq/common';
 import * as http from 'http';
 import * as https from 'https';
 

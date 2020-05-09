@@ -1,6 +1,6 @@
 {
-  "name": "minireq",
-  "version": "1.1.0",
+  "name": "@minireq/browser",
+  "version": "1.2.0-beta.1",
   "description": "A minimal request library for the browser",
   "main": "build/bundle.cjs.js",
   "module": "build/bundle.esm.js",
@@ -16,6 +16,9 @@
     "docs": "rm -r docs; typedoc --out docs --mode file --excludeNotExported src && touch docs/.nojekyll",
     "prepublishOnly": "pnpm run build && pnpm test",
     "format": "prettier --write './{src,test}/**/*.ts'"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "author": "Jan van Brügge",
   "license": "MIT",
@@ -44,7 +47,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "minireq-common": "workspace:^1.0.0"
+    "@minireq/common": "workspace:^1.0.0-beta.0"
   },
   "prettier": "../configs/.prettierrc.json"
 }
