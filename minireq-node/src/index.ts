@@ -14,6 +14,29 @@ import {
 import * as http from 'http';
 import * as https from 'https';
 
+export {
+    GET,
+    HEAD,
+    POST,
+    PUT,
+    DELETE,
+    CONNECT,
+    OPTIONS,
+    TRACE,
+    PATCH,
+    METHOD,
+    ResponseType,
+    ResultMapping,
+    RequestFn,
+    RequestFunction,
+    RequestOptions,
+    Progress,
+    RequestOpts,
+    Response,
+    Result,
+    Serializer
+} from '@minireq/common';
+
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
     defaultOptions: Partial<RequestOptions> = {}

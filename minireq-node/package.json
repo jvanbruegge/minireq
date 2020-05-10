@@ -1,6 +1,6 @@
 {
 	"name": "@minireq/node",
-	"version": "1.0.0-beta.2",
+	"version": "1.0.0-beta.5",
 	"description": "A minimal request library for nodejs",
 	"main": "build/bundle.cjs.js",
 	"module": "build/bundle.esm.js",
@@ -21,7 +21,7 @@
 	"author": "Jan van Brügge",
 	"license": "MIT",
 	"dependencies": {
-		"@minireq/common": "^1.0.0-beta.0"
+		"@minireq/common": "^1.0.0-beta.1"
 	},
 	"devDependencies": {
 		"@types/node": "^13.13.2",
