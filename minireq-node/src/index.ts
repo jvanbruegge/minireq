@@ -58,10 +58,15 @@ export function makeRequest(
         const h = /^http:\/\//.test(opts.url) ? http : https;
 
         const headers = {
-            'Content-Type': opts.contentType,
-            Accept: opts.accept,
             ...opts.headers
         } as Record<string, string>;
+
+        if (opts.contentType) {
+            headers['Content-Type'] = opts.contentType;
+        }
+        if (opts.accept) {
+            headers['Accept'] = opts.accept;
+        }
 
         if (opts.auth) {
             const base64 = Buffer.from(

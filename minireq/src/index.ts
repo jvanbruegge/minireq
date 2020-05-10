@@ -88,8 +88,12 @@ export function makeRequest(
                 request.setRequestHeader(key, opts.headers[key]);
             }
         }
-        request.setRequestHeader('Content-Type', opts.contentType);
-        request.setRequestHeader('Accept', opts.accept);
+        if (opts.contentType) {
+            request.setRequestHeader('Content-Type', opts.contentType);
+        }
+        if (opts.accept) {
+            request.setRequestHeader('Accept', opts.accept);
+        }
 
         if (opts.auth) {
             request.setRequestHeader(
