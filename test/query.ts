@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { db, url } from './helpers';
 
-import { RequestFn } from 'minireq-common';
+import { RequestFn } from '@minireq/common';
 
 export function makeQueryTests(request: RequestFn) {
     describe('queryString', () => {
@@ -9,7 +9,7 @@ export function makeQueryTests(request: RequestFn) {
             const { promise } = request({
                 method: 'GET',
                 url: url('/users'),
-                query: '?id=1'
+                query: '?id=1',
             });
 
             return promise.then(({ status, data }) => {
@@ -22,7 +22,7 @@ export function makeQueryTests(request: RequestFn) {
             const { promise } = request({
                 method: 'GET',
                 url: url('/users'),
-                query: 'age=40'
+                query: 'age=40',
             });
 
             return promise.then(({ status, data }) => {
@@ -36,7 +36,7 @@ export function makeQueryTests(request: RequestFn) {
                 request({
                     method: 'GET',
                     url: url('/users'),
-                    query: {}
+                    query: {},
                 })
             );
         });
@@ -47,8 +47,8 @@ export function makeQueryTests(request: RequestFn) {
                 url: url('/users'),
                 query: {
                     name: 'Agnes',
-                    age: 18
-                }
+                    age: 18,
+                },
             });
 
             return promise.then(({ status, data }) => {

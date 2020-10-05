@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { db, url } from './helpers';
 
-import { RequestFn } from 'minireq-common';
+import { RequestFn } from '@minireq/common';
 
 export { makeHeaderTests } from './headers';
 export { makeQueryTests } from './query';
@@ -15,7 +15,7 @@ export function makeSimpleTests(request: RequestFn) {
         it('should be able to make a simple GET request', () => {
             const { promise } = request({
                 method: 'GET',
-                url: url('/users')
+                url: url('/users'),
             });
 
             return promise.then(({ status, data }) => {
@@ -28,13 +28,13 @@ export function makeSimpleTests(request: RequestFn) {
             const user = {
                 name: 'Ingo',
                 age: 9,
-                children: []
+                children: [],
             };
 
             const { promise } = request({
                 method: 'POST',
                 url: url('/users'),
-                send: user
+                send: user,
             });
 
             return promise.then(({ status, data }) => {
@@ -46,7 +46,7 @@ export function makeSimpleTests(request: RequestFn) {
         it('should have a clean slate again', () => {
             const { promise } = request({
                 method: 'GET',
-                url: url('/users')
+                url: url('/users'),
             });
 
             return promise.then(({ status, data }) => {
