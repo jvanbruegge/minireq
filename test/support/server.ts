@@ -47,7 +47,6 @@ app.get('/document/html', (_: any, res: any) => {
 
 app.get('/streaming', (_: any, res: any) => {
     let i = 1;
-
     const id = setInterval(() => {
         if (i > 10) {
             res.end();
@@ -76,7 +75,7 @@ app.get('/secret', (req: any, res: any) => {
 app.post('/users', (req: any, res: any) => {
     res.status(201).json({
         ...req.body,
-        id: 4
+        id: 4,
     });
 });
 

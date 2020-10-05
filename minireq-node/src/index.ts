@@ -9,7 +9,7 @@ import {
     Progress,
     makeQueryString,
     defaultSerializers,
-    defaults
+    defaults,
 } from '@minireq/common';
 import * as http from 'http';
 import * as https from 'https';
@@ -34,31 +34,31 @@ export {
     RequestOpts,
     Response,
     Result,
-    Serializer
+    Serializer,
 } from '@minireq/common';
 
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
     defaultOptions: Partial<RequestOptions> = {}
-): <T = any, Type extends ResponseType = 'text'>(
+): <T = any, Type extends ResponseType = 'parsed'>(
     options: RequestOpts<METHOD, Type>
 ) => Result<ResultMapping<T>[Type]> {
-    return function request<T = any, Type extends ResponseType = 'text'>(
+    return function request<T = any, Type extends ResponseType = 'parsed'>(
         options: RequestOpts<METHOD, Type>
     ): Result<ResultMapping<T>[Type]> {
         const opts = { ...defaults, ...defaultOptions, ...options };
         const url = opts.url + makeQueryString(opts.query);
 
-        if (opts.responseType === 'blob') {
+        const h = /^http:\/\//.test(opts.url) ? http : https;
+
+        if (opts.uploadProgress) {
             throw new Error(
-                'Node.js does not support Blobs, use arraybuffer instead'
+                'Node.js does not support reporting upload progress'
             );
         }
 
-        const h = /^http:\/\//.test(opts.url) ? http : https;
-
         const headers = {
-            ...opts.headers
+            ...opts.headers,
         } as Record<string, string>;
 
         if (opts.contentType) {
@@ -79,7 +79,7 @@ export function makeRequest(
         const req = h.request(url, {
             method: opts.method,
             timeout: opts.timeout,
-            headers
+            headers,
         });
 
         let id: any = undefined;
@@ -89,12 +89,12 @@ export function makeRequest(
                 if (opts.onTimeout) {
                     opts.onTimeout(makeProgress(data, undefined));
                 }
-            });
+            }, opts.timeout);
         }
 
         const promise = new Promise<any>((resolve, reject) => {
             req.on('response', res => {
-                if (opts.responseType !== 'arraybuffer') {
+                if (opts.responseType !== 'binary') {
                     res.setEncoding('utf-8');
                 }
                 res.on('data', chunk => {
@@ -117,13 +117,18 @@ export function makeRequest(
                 res.on('end', () => {
                     if (id) clearTimeout(id);
 
-                    let response: any = Array.isArray(data)
-                        ? Buffer.concat(data)
-                        : data;
+                    let response: any = data;
+                    if (Array.isArray(data)) {
+                        const buffer = Buffer.concat(data);
+                        response = buffer.buffer.slice(
+                            buffer.byteOffset,
+                            buffer.byteOffset + buffer.byteLength
+                        );
+                    }
 
                     if (
                         typeof response === 'string' &&
-                        opts.responseType === 'text'
+                        opts.responseType === 'parsed'
                     ) {
                         const mimeType = (res.headers[
                             'content-type'
@@ -136,7 +141,7 @@ export function makeRequest(
 
                     resolve({
                         status: res.statusCode,
-                        data: response
+                        data: response,
                     });
                 });
             });
@@ -148,8 +153,22 @@ export function makeRequest(
         });
 
         if (opts.send) {
-            if (typeof opts.send === 'string') {
-                //TODO: Add rest of possible types
+            if (
+                typeof opts.send === 'string' ||
+                opts.send instanceof ArrayBuffer ||
+                opts.send instanceof ArrayBuffer ||
+                opts.send instanceof Int8Array ||
+                opts.send instanceof Uint8Array ||
+                opts.send instanceof Uint8ClampedArray ||
+                opts.send instanceof Int16Array ||
+                opts.send instanceof Uint16Array ||
+                opts.send instanceof Int32Array ||
+                opts.send instanceof Uint32Array ||
+                opts.send instanceof Float32Array ||
+                opts.send instanceof Float64Array ||
+                opts.send instanceof DataView ||
+                opts.send instanceof URLSearchParams
+            ) {
                 req.write(opts.send);
             } else if (serializers[opts.contentType!]?.convert) {
                 req.write(serializers[opts.contentType!].convert!(opts.send));
@@ -164,7 +183,7 @@ export function makeRequest(
 
         return {
             promise,
-            abort: () => req.abort()
+            abort: () => req.abort(),
         };
     };
 }
@@ -187,6 +206,6 @@ function makeProgress(
     return {
         lengthComputable,
         loaded,
-        total
+        total,
     };
 }

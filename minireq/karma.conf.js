@@ -8,35 +8,36 @@ module.exports = config => {
 
         files: [
             { pattern: 'minireq/src/**/*.ts' },
-            { pattern: '{.,minireq}/test/**.ts' }
+            { pattern: '{.,minireq}/test/**.ts' },
         ],
 
         plugins: [
             'karma-mocha',
             'karma-firefox-launcher',
             'karma-chrome-launcher',
-            'karma-typescript'
+            'karma-typescript',
         ],
 
         preprocessors: {
-            '**/*.ts': ['karma-typescript']
+            '**/*.ts': ['karma-typescript'],
         },
 
         reporters: ['dots', 'karma-typescript'],
 
-        browsers: debug ? ['Firefox'] : ['FirefoxHeadless', 'ChromeHeadless'],
+        browsers: debug ? ['Chrome'] : ['FirefoxHeadless', 'ChromeHeadless'],
+        concurrency: 1,
 
         karmaTypescriptConfig: {
             reports: {
                 text: null,
                 html: 'coverage',
-                json: { directory: 'coverage', filename: 'coverage.json' }
+                json: { directory: 'coverage', filename: 'coverage.json' },
             },
             coverageOptions: {
-                exclude: /^test\//
-            }
+                exclude: /^test\//,
+            },
         },
 
-        singleRun: !debug
+        singleRun: !debug,
     });
 };
