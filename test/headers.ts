@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { url } from './helpers';
 
-import { RequestFn } from 'minireq-common';
+import { RequestFn } from '@minireq/common';
 
 export function makeHeaderTests(request: RequestFn) {
     describe('header tests', () => {
@@ -13,8 +13,8 @@ export function makeHeaderTests(request: RequestFn) {
                 url: url('/headers'),
                 headers: {
                     'X-Auth-Token': 'superSecretToken',
-                    'X-Echo': echo
-                }
+                    'X-Echo': echo,
+                },
             });
 
             return promise.then(({ status, data }) => {
@@ -29,8 +29,8 @@ export function makeHeaderTests(request: RequestFn) {
                 url: url('/secret'),
                 auth: {
                     user: 'admin',
-                    password: 'admin'
-                }
+                    password: 'admin',
+                },
             });
 
             return promise.then(({ status }) => {

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { url } from './helpers';
 
-import { RequestFn } from 'minireq-common';
+import { RequestFn } from '@minireq/common';
 
 export function makeSendTests(request: RequestFn) {
     describe('send tests', () => {
@@ -9,13 +9,13 @@ export function makeSendTests(request: RequestFn) {
             const str = JSON.stringify({
                 name: 'Hans',
                 age: 99,
-                children: []
+                children: [],
             });
 
             const { promise } = request({
                 method: 'POST',
                 url: url('/users'),
-                send: str
+                send: str,
             });
 
             return promise.then(({ status, data }) => {
@@ -30,9 +30,9 @@ export function makeSendTests(request: RequestFn) {
                     method: 'POST',
                     url: url('/users'),
                     send: {
-                        foo: 'bar'
+                        foo: 'bar',
                     },
-                    contentType: 'application/xml'
+                    contentType: 'application/xml',
                 })
             );
         });
