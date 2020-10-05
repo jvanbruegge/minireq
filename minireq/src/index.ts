@@ -8,7 +8,7 @@ import {
     ResultMapping,
     makeQueryString,
     defaultSerializers,
-    defaults
+    defaults,
 } from '@minireq/common';
 
 export {
@@ -31,16 +31,16 @@ export {
     RequestOpts,
     Response,
     Result,
-    Serializer
+    Serializer,
 } from '@minireq/common';
 
 export function makeRequest(
     serializers: Record<string, Serializer> = defaultSerializers,
     defaultOptions: Partial<RequestOptions> = {}
-): <T = any, Type extends ResponseType = 'text'>(
+): <T = any, Type extends ResponseType = 'parsed'>(
     options: RequestOpts<METHOD, Type>
 ) => Result<ResultMapping<T>[Type]> {
-    return function request<T = any, Type extends ResponseType = 'text'>(
+    return function request<T = any, Type extends ResponseType = 'parsed'>(
         options: RequestOpts<METHOD, Type>
     ): Result<ResultMapping<T>[Type]> {
         const opts = { ...defaults, ...defaultOptions, ...options };
@@ -63,7 +63,7 @@ export function makeRequest(
 
         request.addEventListener('load', () => {
             let response: any = request.response;
-            if (request.responseType === 'text') {
+            if (opts.responseType === 'parsed') {
                 const mimeType = request
                     .getResponseHeader('Content-Type')
                     ?.split(';')[0];
@@ -74,14 +74,22 @@ export function makeRequest(
 
             resolve({
                 status: request.status,
-                data: response
+                data: response,
             });
         });
         request.addEventListener('error', reject);
 
+        if (opts.progress) {
+            request.onprogress = opts.progress;
+        }
+        if (opts.uploadProgress) {
+            request.upload.onprogress = opts.uploadProgress;
+        }
+
         request.open(opts.method, url, true);
 
-        request.responseType = opts.responseType;
+        request.responseType =
+            opts.responseType === 'binary' ? 'arraybuffer' : 'text';
 
         if (opts.headers) {
             for (const key in opts.headers) {
@@ -100,10 +108,6 @@ export function makeRequest(
                 'Authorization',
                 `Basic ${btoa(opts.auth.user + ':' + opts.auth.password)}`
             );
-        }
-
-        if (opts.progress) {
-            request.addEventListener('progress', opts.progress);
         }
 
         if (opts.send) {
@@ -143,7 +147,7 @@ export function makeRequest(
                 resolve = res;
                 reject = rej;
             }),
-            abort
+            abort,
         };
     };
 }

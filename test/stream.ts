@@ -30,7 +30,7 @@ export function makeStreamTests(request: RequestFn) {
 
             setTimeout(abort, 25);
 
-            promise.then(() => assert.fail('should not deliver data'));
+            promise.then(() => done('should not deliver data'));
 
             setTimeout(done, 110);
         });
@@ -53,26 +53,34 @@ export function makeStreamTests(request: RequestFn) {
             });
         });
 
-        // This fails in chrome for some reason
-        it.skip('should provide progress when aborting later', done => {
+        // This fails in chrome, because for some reason no progress events are sent
+        it('should provide progress when aborting later', done => {
             let progressed = false;
+
+            if (
+                typeof navigator !== 'undefined' &&
+                navigator.userAgent.indexOf('Chrome') != -1
+            ) {
+                done();
+                return;
+            }
 
             const { promise, abort } = request({
                 method: 'GET',
                 url: url('/streaming'),
                 progress: ev => {
-                    progressed = true;
+                    progressed = ev.loaded > 0;
                 },
             });
 
-            promise.then(() => assert.fail('should not deliver data'));
+            promise.then(() => done('should not deliver data'));
 
-            setTimeout(abort, 50);
+            setTimeout(abort, 60);
 
             setTimeout(() => {
                 assert.strictEqual(progressed, true);
                 done();
-            }, 110);
+            }, 120);
         });
 
         it('should allow to specify a timeout on the request', done => {
@@ -83,7 +91,7 @@ export function makeStreamTests(request: RequestFn) {
                 onTimeout: () => done(),
             });
 
-            promise.then(() => assert.fail('should not deliver data'));
+            promise.then(() => done('should not deliver data'));
         });
     });
 }

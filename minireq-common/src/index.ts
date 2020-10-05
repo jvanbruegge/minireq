@@ -1,13 +1,14 @@
 export * from './types';
+import type { RequestOptions } from './types';
 
 export const defaultSerializers = {
-    'application/json': { parse: JSON.parse, convert: JSON.stringify }
+    'application/json': { parse: JSON.parse, convert: JSON.stringify },
 };
 
-export const defaults = {
+export const defaults: Partial<RequestOptions> = {
     contentType: 'application/json',
-    responseType: 'text' as 'text',
-    accept: '*/*'
+    responseType: 'parsed',
+    accept: '*/*',
 };
 
 export function makeQueryString(

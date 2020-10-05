@@ -19,24 +19,17 @@ export type METHOD =
     | TRACE
     | PATCH;
 
-export type ResponseType =
-    | 'text'
-    | 'arraybuffer'
-    | 'blob'
-    | 'document'
-    | 'json';
+export type ResponseType = 'raw_text' | 'binary' | 'parsed';
 
 export type ResultMapping<T> = {
-    arraybuffer: ArrayBuffer;
-    blob: Blob;
-    document: Document;
-    json: T;
-    text: T;
+    binary: ArrayBuffer;
+    raw_text: string;
+    parsed: T;
 };
 
 export type RequestFn<T = any> = RequestFunction<T, ResponseType>;
 
-export type RequestFunction<T = any, Type extends ResponseType = 'text'> = (
+export type RequestFunction<T = any, Type extends ResponseType = 'parsed'> = (
     options: RequestOpts<METHOD, Type>
 ) => Result<ResultMapping<T>[Type]>;
 
@@ -84,14 +77,21 @@ export type RequestOpts<Method, Type extends ResponseType> = {
     attach?: {
         [field: string]: Blob | File;
     };
+    /**
+     * A callback for listening to **download** progress events
+     */
     progress?: (x: Progress) => void;
+    /**
+     * A callback for listening to **upload** progress events
+     */
+    uploadProgress?: (x: Progress) => void;
     agent?: {
         key: string;
         cert: string;
     };
     /**
-     * Usually 'text' or 'arraybuffer' for binary data
-     * @default 'text'
+     * Usually 'parsed' or 'arraybuffer' for binary data
+     * @default 'parsed'
      */
     responseType?: Type;
     /**
