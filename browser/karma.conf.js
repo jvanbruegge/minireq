@@ -7,8 +7,8 @@ module.exports = config => {
         frameworks: ['mocha', 'karma-typescript'],
 
         files: [
-            { pattern: 'minireq/src/**/*.ts' },
-            { pattern: '{.,minireq}/test/**.ts' },
+            { pattern: 'browser/src/**/*.ts' },
+            { pattern: '{.,browser}/test/**.ts' },
         ],
 
         plugins: [

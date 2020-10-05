@@ -1,4 +1,4 @@
 packages:
-    - minireq
-    - minireq-common
-    - minireq-node
+    - browser
+    - common
+    - node
