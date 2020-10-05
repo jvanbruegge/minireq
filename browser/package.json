@@ -1,6 +1,6 @@
 {
   "name": "@minireq/browser",
-  "version": "1.2.0-beta.5",
+  "version": "2.0.0",
   "description": "A minimal request library for the browser",
   "main": "build/bundle.cjs.js",
   "module": "build/bundle.esm.js",
@@ -47,7 +47,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@minireq/common": "workspace:^1.0.0-beta.1"
+    "@minireq/common": "workspace:^2.0.0"
   },
   "prettier": "../configs/.prettierrc.json"
 }
