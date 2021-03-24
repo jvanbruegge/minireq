@@ -2,7 +2,7 @@
 
 ![build](https://github.com/jvanbruegge/minireq/workflows/Continous%20Integration/badge.svg) ![docs](https://github.com/jvanbruegge/minireq/workflows/Documentation/badge.svg) [![codecov](https://codecov.io/gh/jvanbruegge/minireq/branch/master/graph/badge.svg)](https://codecov.io/gh/jvanbruegge/minireq) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-A minimal request library built on XMLHTTPRequest for the browser.
+A minimal request library built on XMLHTTPRequest for the browser, and for nodejs with the same API.
 
 Documentation on [Github Pages](https://jvanbruegge.github.io/minireq/)
 
@@ -15,13 +15,15 @@ Also I want a request library with better types than currently available.
 ## Example
 
 ```ts
-import { makeRequest } from 'minireq';
+import { makeRequest } from '@minireq/browser';
+// If you are using nodejs, you can use
+// import { makeRequest } from '@minireq/node';
 
 const request = makeRequest();
 
 const { promise, abort } = request({
     method: 'GET',
-    url: '/api/users'
+    url: '/api/users',
 });
 
 // Abort on user click
@@ -39,7 +41,7 @@ promise.then(({ status, data }) => {
 Making a post request, with a timeout on 500ms
 
 ```ts
-import { makeRequest } from 'minireq';
+import { makeRequest } from '@minireq/browser';
 
 const request = makeRequest();
 
@@ -49,9 +51,9 @@ const { promise } = request({
     send: {
         name: 'Peter',
         age: 50,
-        children: []
+        children: [],
     },
-    timeout: 500
+    timeout: 500,
 });
 
 promise.then(({ status, data }) => {
@@ -64,7 +66,7 @@ promise.then(({ status, data }) => {
 Using a custom content type
 
 ```ts
-import { makeRequest, defaultSerializers } from 'minireq';
+import { makeRequest, defaultSerializers } from '@minireq/browser';
 
 const serializer = {
     parse: (data: string) => data.split('\n').map(x => JSON.parse(x)),
@@ -74,18 +76,18 @@ const serializer = {
         } else {
             return data.map(x => JSON.stringify(x)).join('\n');
         }
-    }
+    },
 };
 
 const { request } = makeRequest({
     ...defaultSerializers,
-    'application/ndjson': serializer
+    'application/ndjson': serializer,
 });
 
 const { promise, abort } = request({
     method: 'GET',
     url: '/api/users',
-    accept: 'application/ndjson'
+    accept: 'application/ndjson',
 });
 
 const { status, data } = await promise;
