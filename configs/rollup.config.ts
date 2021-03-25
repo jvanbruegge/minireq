@@ -11,6 +11,6 @@ export default {
         : undefined),
     output: {
         file: `build/bundle.${format}.js`,
-        format
-    }
+        format,
+    },
 };

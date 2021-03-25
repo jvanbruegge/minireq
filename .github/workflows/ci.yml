@@ -1,37 +1,37 @@
 name: Build
 on:
-  push:
-    paths-ignore:
-      - '**.md'
+    push:
+        paths-ignore:
+            - '**.md'
 
 jobs:
-  build:
-    name: build
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+    build:
+        name: build
+        runs-on: ubuntu-18.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v2
 
-      - name: Install pnpm
-        run: sudo npm install --global pnpm
+            - name: Install pnpm
+              run: sudo npm install --global pnpm
 
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        id: cache-pnpm-store
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              id: cache-pnpm-store
+              with:
+                  path: ~/.pnpm-store
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm recursive install
+            - name: Install dependencies
+              run: pnpm recursive install
 
-      - name: Build project
-        run: pnpm recursive run build
+            - name: Build project
+              run: pnpm recursive run build
 
-      - name: Run tests
-        run: pnpm recursive test --workspace-concurrency 1
+            - name: Run tests
+              run: pnpm recursive test --workspace-concurrency 1
 
-      #- name: Upload coverage
-      #uses: codecov/codecov-action@v1
+            #- name: Upload coverage
+            #uses: codecov/codecov-action@v1

@@ -1,44 +1,44 @@
 name: Documentation
 on:
-  push:
-    paths:
-      - 'minireq/src/**'
-      - 'README.md'
-      - '.github/workflows/docs.yml'
-    branches:
-      - master
+    push:
+        paths:
+            - 'minireq/src/**'
+            - 'README.md'
+            - '.github/workflows/docs.yml'
+        branches:
+            - master
 
 jobs:
-  build:
-    name: build
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+    build:
+        name: build
+        runs-on: ubuntu-18.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v2
 
-      - name: Install pnpm
-        run: sudo npm install --global pnpm
+            - name: Install pnpm
+              run: sudo npm install --global pnpm
 
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        id: cache-pnpm-store
-        with:
-          path: ~/.pnpm-store
-          key: docs-pnpm-store-${{ hashFiles('package.json') }}
-          restore-keys: |
-            docs-pnpm-store-
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              id: cache-pnpm-store
+              with:
+                  path: ~/.pnpm-store
+                  key: docs-pnpm-store-${{ hashFiles('package.json') }}
+                  restore-keys: |
+                      docs-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm recursive install
+            - name: Install dependencies
+              run: pnpm recursive install
 
-      - name: Build packages
-        run: pnpm recursive run build
+            - name: Build packages
+              run: pnpm recursive run build
 
-      - name: Build documentation
-        run: cd minireq && pnpm run docs
+            - name: Build documentation
+              run: cd minireq && pnpm run docs
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./minireq/docs
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+                  publish_dir: ./minireq/docs

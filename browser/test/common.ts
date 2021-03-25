@@ -5,7 +5,7 @@ import {
     makeResponseTypeTests,
     makeSendTests,
     makeSerializationTests,
-    makeStreamTests
+    makeStreamTests,
 } from '../../test/index';
 import { makeRequest } from '../src/index';
 
