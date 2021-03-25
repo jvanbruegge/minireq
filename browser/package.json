@@ -5,6 +5,7 @@
   "main": "build/bundle.cjs.js",
   "module": "build/bundle.esm.js",
   "typings": "build/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "tsc --project tsconfig.build.json && pnpm run build:esm && pnpm run build:cjs",
     "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
