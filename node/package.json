@@ -4,7 +4,8 @@
   "description": "A minimal request library for nodejs",
   "main": "build/bundle.cjs.js",
   "module": "build/bundle.esm.js",
-  "typings": "build/index.d.ts",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "tsc --project tsconfig.build.json && pnpm run build:cjs && pnpm run build:esm",
     "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c rollup.config.ts",
