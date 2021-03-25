@@ -1,12 +1,12 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Peter",
-            "age": 40,
-            "children": ["Agnes", "Herbert"]
-        },
-        { "id": 2, "name": "Agnes", "age": 18, "children": [] },
-        { "id": 3, "name": "Herbert", "age": 20, "children": [] }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "Peter",
+      "age": 40,
+      "children": ["Agnes", "Herbert"]
+    },
+    { "id": 2, "name": "Agnes", "age": 18, "children": [] },
+    { "id": 3, "name": "Herbert", "age": 20, "children": [] }
+  ]
 }

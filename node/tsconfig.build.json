@@ -1,8 +1,8 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "module": "es6"
-    },
-    "include": [],
-    "files": ["./src/index.ts"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "es6"
+  },
+  "include": [],
+  "files": ["./src/index.ts"]
 }
