@@ -13,6 +13,7 @@
     "test:normal": "nyc --reporter text --reporter json --reporter html pnpm run test:no_cover",
     "test:no_cover": "ts-mocha test/**/*.ts",
     "start-server": "ts-node ../test/support/server.ts",
+    "release": "release-it --config ../configs/release-it.json --git.commitMessage='chore(release): @minireq/node v${version}'",
     "prepublishOnly": "pnpm run build && pnpm test"
   },
   "publishConfig": {

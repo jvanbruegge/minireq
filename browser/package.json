@@ -14,6 +14,7 @@
     "test:normal": "karma start",
     "start-server": "ts-node ../test/support/server.ts",
     "prepublishOnly": "pnpm run build && pnpm test",
+    "release": "release-it --config ../configs/release-it.json --git.commitMessage='chore(release): @minireq/browser v${version}'",
     "format": "prettier --write './{src,test}/**/*.ts'"
   },
   "publishConfig": {

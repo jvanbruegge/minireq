@@ -9,6 +9,7 @@
     "build": "tsc && pnpm run build:esm && pnpm run build:cjs",
     "build:esm": "cross-env BUNDLE_FORMAT=esm rollup -c ../configs/rollup.config.ts",
     "build:cjs": "cross-env BUNDLE_FORMAT=cjs rollup -c ../configs/rollup.config.ts",
+    "release": "release-it --config ../configs/release-it.json --git.commitMessage='chore(release): @minireq/common v${version}'",
     "prepublishOnly": "pnpm run build"
   },
   "publishConfig": {
