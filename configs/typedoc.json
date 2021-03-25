@@ -1,0 +1,7 @@
+{
+  "name": "minireq",
+  "out": "docs",
+  "theme": "default",
+  "tsconfig": "configs/tsconfig.typedoc.json",
+  "entryPoints": ["browser/src", "node/src", "common/src"]
+}
