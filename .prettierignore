@@ -2,5 +2,6 @@ build/
 coverage/
 node_modules/
 .nyc_output/
+docs/
 
 pnpm-lock.yaml

@@ -10,6 +10,23 @@
   "lint-staged": {
     "*.(js|ts|json|yaml)": "prettier --write"
   },
+  "commithelper": {
+    "scopes": [
+      "browser",
+      "node",
+      "common"
+    ],
+    "scopeOverrides": {
+      "chore": [
+        "tools",
+        "refactor",
+        "release",
+        "test",
+        "deps",
+        "docs"
+      ]
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jvanbruegge/minireq.git"
@@ -26,6 +43,7 @@
     "@types/express": "^4.17.8",
     "@types/mocha": "^8.0.3",
     "@types/node": "^14.11.2",
+    "commithelper": "^1.1.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
